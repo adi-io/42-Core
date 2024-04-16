@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
@@ -7,34 +8,38 @@ class	Contact
 {
 	public:
 
-		int	id;
+		int	Id;
 		string	FirstName;
 		string	LastName;
 		string	NickName;
-		string	PhoneNumber;
+		int	PhoneNumber;
 		string	DarkestSecret;
 };
 
 class PhoneBook
 {
-	private:
+	public:
 		Contact	Contacts[8];
 		int	IndexContacts;
+		int	TotalContacts;
 	public:
-		PhoneBook() : IndexContacts(0) {}
+		PhoneBook() : IndexContacts(0), TotalContacts(0) {}
 		void	AddContact(Contact NewContact)
 		{
-			if (IndexContacts > 8)
+			if (IndexContacts >= 8)
 			{
 				Contacts[0] = NewContact;
 				IndexContacts = 1;
-				NewContact.id = IndexContacts;
+				NewContact.Id = IndexContacts;
 			}
 			else
 			{
-				Contacts[IndexContacts];
+				Contacts[IndexContacts] = NewContact;
 				IndexContacts++;
-				NewContact.id = IndexContacts;
+				NewContact.Id = IndexContacts;
+				cout << "ID ->" << NewContact.Id << endl;
+				if (TotalContacts < 9)
+					TotalContacts++;
 			}
 		}
 
