@@ -63,3 +63,8 @@ void	ft_count_pipes(t_lexer *lexer_list, t_tools *tools)
 		arg = arg -> next;
 	}
 }
+
+void	ft_test_mman(char push)
+{
+	printf("test call\n");
+}

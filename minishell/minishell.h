@@ -5,8 +5,8 @@
 # include <string.h>
 # include <fcntl.h>
 # include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+// # include <readline/readline.h>
+// # include <readline/history.h>
 # include <stdbool.h>
 # include "structs.h"
 # include "./libft/libft.h"
