@@ -1,9 +1,14 @@
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
 NAME = MINISHELL
+
+CFLAGS = -Wall -Wextra -Werror
+
 SRC = $(wildcard *.c)
 LIBFT = ./libft/libft.a
 OBJS = $(SRC:.c=.o)
+
+RM = rm -rf
+CC = cc
+
 
 all: $(NAME)
 
