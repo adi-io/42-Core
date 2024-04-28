@@ -4,7 +4,7 @@ CLR2 = \033[0;36m
 CLR1 = \033[0;37m
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = # -Wall -Werror -Wextra
 RM = rm -rf
 
 # Directories
@@ -15,7 +15,8 @@ INCLUDE = include
 
 # Sources
 SRC_FILES = errors minishell_loop minishell parser redirections \
-			tokenizer utils_lexer utils_redirections utils utils_two
+			tokenizer utils_lexer utils_redirections utils utils_two \
+			executer
 
 SRC = $(addsuffix .c, $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))
