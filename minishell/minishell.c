@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:36:13 by agadkari          #+#    #+#             */
-/*   Updated: 2024/04/25 20:42:32 by mman             ###   ########.fr       */
+/*   Updated: 2024/04/28 12:07:11 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 	// envpprint(tools);
 	find_pwd(tools);
 	init_tools(&tools);
-	printf("\n\n-------\nWelcome! %s | MINISHELL:\n", getenv("LOGNAME"));
+	printf("\n\n-------\nWelcome! %s | MINISHELL™:\n", getenv("LOGNAME"));
 	minishell_loop(&tools);
 	return (0);
 }

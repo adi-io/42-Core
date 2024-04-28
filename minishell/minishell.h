@@ -42,6 +42,13 @@ void	ft_lexaddback(t_lexer **lst, t_lexer *new);
 t_simple_cmds	*ft_simple_cmdnew(char	**str, int num_redirections, t_lexer *redirections);
 void	ft_simple_cmd_addback(t_simple_cmds **lst, t_simple_cmds *new);
 
+int				executer_enter(t_tools *tools);
+int				executer(t_tools *tools);
+t_simple_cmds	*ft_simple_cmdsfirst(t_simple_cmds *list_of_cmds);
+int				simple_executer_single(t_tools *tools);
+t_simple_cmds	*expand_argument_call(t_tools *tools, t_simple_cmds *cmd);
+
+
 
 //ADDING PROTOTYPES NOTE23/04/
 int		ft_error(int error, t_tools *tools);

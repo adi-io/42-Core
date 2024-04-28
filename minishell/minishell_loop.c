@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:59:26 by agadkari          #+#    #+#             */
-/*   Updated: 2024/04/28 11:09:47 by mman             ###   ########.fr       */
+/*   Updated: 2024/04/28 12:07:42 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int	minishell_loop(t_tools *tools)
 		return (EXIT_FAILURE);
 	parser(tools);
 	//TODO Write excecuter
+	executer_enter(tools);
 	//TODO reset function
 	return (0);
 }
