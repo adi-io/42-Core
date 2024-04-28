@@ -6,8 +6,14 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:22:08 by mman              #+#    #+#             */
-/*   Updated: 2024/04/28 11:22:20 by mman             ###   ########.fr       */
+/*   Updated: 2024/04/28 11:23:59 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	executer(t_tools *tools)
+{
+
+	return (EXIT_SUCCESS);
+}
