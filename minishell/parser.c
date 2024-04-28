@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agadkari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:57:22 by agadkari          #+#    #+#             */
-/*   Updated: 2024/04/11 16:26:09 by agadkari         ###   ########.fr       */
+/*   Updated: 2024/04/28 11:08:56 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,13 @@ int	parser(t_tools	*tools)
 	t_parser_tools	parser_tools;
 
 	tools -> simple_cmds = NULL;
+
+	printf("\n\nENTER SUCCESS\n");
+
 	ft_count_pipes(tools -> lexer_list, tools);
-	if (tools -> lexer_list -> token == PIPE)
+	// if (tools -> lexer_list -> token == PIPE)
 		//handle error
+
 	while (tools -> lexer_list)
 	{
 		if (tools -> lexer_list -> token && tools -> lexer_list -> token == PIPE)
@@ -62,9 +66,4 @@ void	ft_count_pipes(t_lexer *lexer_list, t_tools *tools)
 			tools ->pipes++;
 		arg = arg -> next;
 	}
-}
-
-void	ft_test_mman(char push)
-{
-	printf("test call\n");
 }

@@ -9,6 +9,8 @@ typedef enum s_tokens
 	LESS_LESS,
 }	t_tokens;
 
+//Chopped arguments from
+//the Command Line
 typedef struct s_lexer
 {
 	char			*str;

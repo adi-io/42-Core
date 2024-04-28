@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agadkari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:59:26 by agadkari          #+#    #+#             */
-/*   Updated: 2024/04/11 16:17:50 by agadkari         ###   ########.fr       */
+/*   Updated: 2024/04/28 11:09:47 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	find_other_pair(char *str, int i, int *int_del, int del)
 	return (j - i);
 }
 
+//returns 1 if no
+//returns 0 if yes
 int	count_quotes(char *str) //not sure if this work for all cases
 {
 	int	i;
@@ -78,9 +80,9 @@ int	count_quotes(char *str) //not sure if this work for all cases
 
 	while (str[++i])
 	{
-		if (str[i] == 34)
+		if (str[i] == '\"')
 			i += find_other_pair(str, i, &d, 34);
-		if (str[i] == 39)
+		else if (str[i] == '\'')
 			i += find_other_pair(str, i, &d, 39);
 	}
 	if ((s > 0 && s % 2 != 0) || (d > 0 && d % 2 != 0))
@@ -88,23 +90,33 @@ int	count_quotes(char *str) //not sure if this work for all cases
 	return (1);
 }
 
+/* Incorrect Balanced Quote Logic: The logic ((s > 0 && s % 2 != 0) || (d > 0 && d % 2 != 0)) isn't a reliable way to determine if quotes are balanced. Consider these cases that would incorrectly return true (indicating unbalanced):
+"hello'": Single quotes balanced, double quotes unbalanced.
+'hello"world"': Both single and double quotes unbalanced.
+Incomplete Handling of Nested Quotes: The code doesn't adequately handle nested quotes. Consider a string like "hello 'world'". The find_other_pair will skip to the end of the string, causing incorrect results.
+ */
+
 int	minishell_loop(t_tools *tools)
 {
 	char	*temp;
 
-	tools -> args = readline("you like bash?:");
+	temp = readline("$> ");
+	if (temp == NULL)
+			return (-1);
+	tools->args = ft_strdup(temp);
 	temp = ft_strtrim(tools -> args, " ");
-	free(tools -> args);
-	tools -> args = temp;
+	tools->args = temp;
 	if (!tools -> args)
-		return (1);
-	if (!tools -> args[0])
-		return (1);
+		return (EXIT_FAILURE);
+	else if (!tools -> args[0])
+		return (EXIT_FAILURE);
 	add_history(tools -> args);
 	if (!count_quotes(tools -> args))
-		return (1);
-	if (!token_reader(tools))
-		return (1);
+		return (EXIT_FAILURE);
+	// Bellow generally returns 1
+	if (token_reader(tools))
+		return (EXIT_FAILURE);
+	//ABOVE CODE WORKSSSS -- Parser SEGFAU. 24/04/20;58 NOTE
 	parser(tools);
 	//TODO Write excecuter
 	//TODO reset function

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agadkari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:16:17 by agadkari          #+#    #+#             */
-/*   Updated: 2024/04/11 14:30:55 by agadkari         ###   ########.fr       */
+/*   Updated: 2024/04/28 11:05:14 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,17 @@ int	rem_spaces(char *str, int i)
 	return (j);
 }
 
+// MMAN wokin on DS RIGHT NOOOOWWWWW   --- start APR 24 21:05
+// if it finds a TOKEN it returns 0
+// if ti sfinds a WORD ("") it returns 0
+// else it returns 1
 int	token_reader(t_tools *tools)
 {
 	int	i;
 	int	j;
 
 	i = 0;
+	printf("token reader args: %s", tools->args);
 	while (tools -> args[i])
 	{
 		j = 0;
@@ -48,6 +53,7 @@ int	token_reader(t_tools *tools)
 	return (0);
 }
 
+// https://miro.com/app/board/uXjVKPNwyKk=/
 int	handle_token(char *str, int i, t_lexer **lexer_list)
 {
 	t_tokens	token;
