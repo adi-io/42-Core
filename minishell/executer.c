@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:22:08 by mman              #+#    #+#             */
-/*   Updated: 2024/04/28 12:15:34 by mman             ###   ########.fr       */
+/*   Updated: 2024/04/28 13:10:34 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	executer_enter(t_tools *tools)
 		simple_executer_single(tools);
 	else
 		executer(tools);
+	return (EXIT_SUCCESS);
 }
 
 // tools-> will be taking in tools->simple_cmds
@@ -40,10 +41,33 @@ int	executer(t_tools *tools)
 
 int	simple_executer_single(t_tools *tools)
 {
+	int	pid;
+	int	status;
+
 	tools->simple_cmds = expand_argument_call(tools, tools->simple_cmds);
+	//HERE: Handle the 4 special-case builtins
+	//CD,    EXPORT,    UNSET,   EXIT
+
+	//HERE: Create redirection-influenced file-generator
+
+	pid = fork();
+	if (pid < 0)
+		return (EXIT_FAILURE);
+	else if (pid == 0)
+	{
+		// int status = execute_command(cmd, tools);
+		exit(status);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			return (EXIT_SUCCESS);
+			// g_global.error_num = WEXITSTATUS(status);
+	}
 	return (EXIT_SUCCESS);
 }
-
+//take in the CMD list and expands special cases such as "", '', or $
 t_simple_cmds	*expand_argument_call(t_tools *tools, t_simple_cmds *cmd)
 {
 	if (tools)
