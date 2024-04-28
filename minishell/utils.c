@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agadkari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:31:12 by agadkari          #+#    #+#             */
-/*   Updated: 2024/04/11 17:31:29 by agadkari         ###   ########.fr       */
+/*   Updated: 2024/04/28 10:59:48 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,23 @@
 
 char	**ft_memmory(char **ptr)
 {
-	size_t i;
+	size_t	i;
 	char	**new;
 
 	i = 0;
 	if (!ptr[i])
 		return (NULL);
-	new = ft_calloc(sizeof(char *), i + 1);
 	while (ptr[i])
+		i++;
+	new = malloc(sizeof(char *) * i + 1);
+	i = 0;
+	while (ptr[i] != NULL)
 	{
 		new[i] = ft_strdup(ptr[i]);
-		//fail condition and free
 		i++;
 	}
+	if (ptr[i] == NULL)
+		new[i] = NULL;
 	return (new);
 }
 
@@ -44,19 +48,33 @@ int	init_tools(t_tools *tools)
 	return (0);
 }
 
-int	find_pwd(t_tools *tools)
+//Finds PWD and OLD_PWD using the getenv func.
+//Stores them to tools.pwd & tools.old_pwd
+int	find_pwd(t_tools tools)
 {
-	int	i;
+// 	char	*env_pwd;
+// 	char	*env_old_pwd;
+	int		i;
 
 	i = 0;
-	while (tools -> envp[i])
+	// editing this 23/04/2024 MMAN -- its possible to use the getenv func. instead NOTE
+	while (tools.envp[i])
 	{
-		if (!ft_strncmp(tools -> envp[i], "PWD=", 4))
-			tools -> pwd = ft_substr(tools -> envp[i], 4, ft_strlen(tools -> envp[i]) - 4);
-		if (!ft_strncmp(tools -> envp[i], "OLDPWD=", 7))
-			tools -> old_pwd = ft_substr(tools -> envp[i], 7, ft_strlen(tools -> envp[i]) - 7);
+		if (!ft_strncmp(tools.envp[i], "PWD=", 4))
+			tools.pwd = ft_substr(tools.envp[i], 4, ft_strlen(tools.envp[i]) - 4);
+		if (!ft_strncmp(tools.envp[i], "OLDPWD=", 7))
+			tools.old_pwd = ft_substr(tools.envp[i], 7, ft_strlen(tools.envp[i]) - 7);
 		i++;
 	}
+	// tools -> pwd = ft_strtrim("OLDPWD=", tools->envp[8]);
+	// tools.old_pwd = ft_strtrim("OLDPWD=", tools.envp[8]);
+	// // couldnt find PWD= records, NOTE
+	// env_pwd = getenv("PWD");
+	// env_old_pwd = getenv("OLDPWD");
+	// tools.pwd = ft_strdup(env_old_pwd);
+	// tools.old_pwd = ft_strdup(env_old_pwd);
+	printf("PWD %s\n", tools.pwd);
+	printf("OLDPWD : %s", tools.old_pwd);
 	return (0);
 }
 
@@ -68,23 +86,23 @@ char	*find_path(char **envp)
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH:", 5))
-			return (ft_substr(envp[i], 5, ft_strlen(envp[i] - 5) ));
+			return (ft_substr(envp[i], 5, ft_strlen(envp[i] - 5)));
 		i++;
 	}
 	return (strdup("\0"));
 }
 
+//functions takes in the path and parses it into a digestable route "chunks"
 int	parse_envp(t_tools *tools)
 {
 	char	*path_from_envp;
-	int	i;
+	int		i;
 	char	*temp;
 
-	path_from_envp = find_path(tools -> envp);
+	path_from_envp = getenv("PATH");
 	tools -> paths = ft_split(path_from_envp, ':');
-	free(path_from_envp);
 	i = 0;
-	while(tools -> paths[i])
+	while (tools -> paths[i])
 	{
 		if (ft_strncmp(&tools->paths[i][ft_strlen(tools->paths[i]) - 1],
 			"/", 1) != 0)
@@ -95,5 +113,12 @@ int	parse_envp(t_tools *tools)
 		}
 		i++;
 	}
+	// //section for testing:
+	// i = 0;
+	// while (tools -> paths[i])
+	// {
+	// 	printf("%i, | path: %s\n", i, tools->paths[i]);
+	// 	i++;
+	// }
 	return (0);
 }

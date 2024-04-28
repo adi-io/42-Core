@@ -5,11 +5,11 @@
 # include <string.h>
 # include <fcntl.h>
 # include <unistd.h>
-// # include <readline/readline.h>
-// # include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <stdbool.h>
 # include "structs.h"
-# include "./libft/libft.h"
+# include "./libft/includes/libft.h"
 
 int	handle_quotes(int i, char *str, int c);
 int	read_words(int i, char *str, t_lexer **lexer_list);
@@ -30,7 +30,7 @@ t_tokens	check_token(int c);
 int	add_node(char *str, t_tokens token, t_lexer **lexer_list);
 char	**ft_memmory(char **ptr);
 int	init_tools(t_tools *tools);
-int	find_pwd(t_tools *tools);
+int	find_pwd(t_tools tools);
 char	*find_path(char **envp);
 int	parse_envp(t_tools *tools);
 
@@ -41,5 +41,15 @@ t_lexer	*ft_lexernew(char *str, int token);
 void	ft_lexaddback(t_lexer **lst, t_lexer *new);
 t_simple_cmds	*ft_simple_cmdnew(char	**str, int num_redirections, t_lexer *redirections);
 void	ft_simple_cmd_addback(t_simple_cmds **lst, t_simple_cmds *new);
+
+
+//ADDING PROTOTYPES NOTE23/04/
+int		ft_error(int error, t_tools *tools);
+void	reset_tools(t_tools *tools);
+
+
+//TOOLS FOR BUGCATCHING
+void	envpprint(t_tools tools);
+
 
 #endif
