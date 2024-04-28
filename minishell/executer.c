@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:22:08 by mman              #+#    #+#             */
-/*   Updated: 2024/04/28 14:51:12 by mman             ###   ########.fr       */
+/*   Updated: 2024/04/28 19:10:28 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,11 @@ int	fetch_func(t_simple_cmds *cmd, t_tools *tools)
 	i = 0;
 	cmd->str = resplit_str(cmd->str);
 	if (!access(cmd->str[0], F_OK))
+	{
+		printf("******************** TEST PROBE ********************\n");
+		printf("%s\n", cmd->str[0]);
 		execve(cmd->str[0], cmd->str, tools->envp);
+	}
 	while (tools->paths[i])
 	{
 		mycmd = ft_strjoin(tools->paths[i], cmd->str[0]);
