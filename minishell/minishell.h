@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/28 14:05:35 by mman              #+#    #+#             */
+/*   Updated: 2024/04/28 14:12:16 by mman             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
-#include <stdio.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
@@ -8,18 +20,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 # include "structs.h"
 # include "./libft/includes/libft.h"
-
-typedef struct s_global
-{
-	int	error_num;
-	int	stop_heredoc;
-	int	in_cmd;
-	int	in_heredoc;
-}	t_global;
-
-t_global	g_global;
+# include "global.h"
 
 int		handle_quotes(int i, char *str, int c);
 int		read_words(int i, char *str, t_lexer **lexer_list);
@@ -69,6 +74,5 @@ void		reset_tools(t_tools *tools);
 
 //TOOLS FOR BUGCATCHING
 void		envpprint(t_tools tools);
-
 
 #endif

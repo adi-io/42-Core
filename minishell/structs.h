@@ -53,3 +53,11 @@ typedef struct s_simple_cmds
 	struct s_simple_cmds	*next;
 	struct s_simple_cmds	*prev;
 }	t_simple_cmds;
+
+typedef struct s_global
+{
+	int	error_num;
+	int	stop_heredoc;
+	int	in_cmd;
+	int	in_heredoc;
+}	t_global;

@@ -6,11 +6,13 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:22:08 by mman              #+#    #+#             */
-/*   Updated: 2024/04/28 13:55:08 by mman             ###   ########.fr       */
+/*   Updated: 2024/04/28 14:13:03 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_global	g_global;
 
 // single command executer when 0 pipes
 // executer when 1 or more |
