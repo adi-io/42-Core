@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_rem_lexstr(t_lexer **lexer_list)
+t_lexer	*ft_rem_lexstr(t_lexer **lexer_list)
 {
 	if ((*lexer_list) -> str)
 	{
@@ -21,6 +21,7 @@ void	ft_rem_lexstr(t_lexer **lexer_list)
 	}
 	free (*lexer_list);
 	*lexer_list = NULL;
+	return (NULL);
 }
 
 void	ft_rem_first(t_lexer **lexer_list)

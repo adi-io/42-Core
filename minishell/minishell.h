@@ -51,7 +51,7 @@ int		find_pwd(t_tools tools);
 char		*find_path(char **envp);
 int		parse_envp(t_tools *tools);
 
-void		ft_rem_lexstr(t_lexer **lexer_list);
+t_lexer		*ft_rem_lexstr(t_lexer **lexer_list);
 void		ft_rem_first(t_lexer **lexer_list);
 void		ft_rm_lex(t_lexer **lexer_list, int key);
 t_lexer		*ft_lexernew(char *str, int token);
