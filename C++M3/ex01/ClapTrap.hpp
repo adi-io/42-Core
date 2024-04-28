@@ -11,14 +11,11 @@ class	ClapTrap
 	public:
 		ClapTrap(std::string name);
 		~ClapTrap();
+		void	setHitPoints(int i);
+		void	setEnergyPoints(int i);
+		void	setAttackDamage(int i);
 		void	attack(const std::string& taget);
 		void	takeDamage(unsigned int amount);
 		void	beRepaired(unsigned int amount);
 };
 
-class	ScavTrap: private ClapTrap, public ClapTrap
-{
-	public:
-		ScavTrap(std::sting name);
-		void	guardGate();
-};

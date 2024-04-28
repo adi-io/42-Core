@@ -20,3 +20,17 @@ void	ClapTrap::attack(const std::string& target)
 	takeDamage(1);
 	std::cout << "ClapTrap " << this->Name << " attacks " << target << " causing 1 points of damage!" << std::endl;
 }
+
+void	ClapTrap::setHitPoints(int i)
+{
+	this->HitPoints = i;
+}
+
+void	ClapTrap::setEnergyPoints(int i)
+{
+	this->EnergyPoints = i;
+}
+void	ClapTrap::setAttackDamage(int i)
+{
+	this->AttackDamage = i;
+}

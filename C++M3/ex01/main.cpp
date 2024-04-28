@@ -1,9 +1,9 @@
-#include "ClapTrap.hpp"
+#include "FragTrap.hpp"
 
 int	main(void)
 {
-	ClapTrap	obj("test");
+	FragTrap	obj("test");
 
-	obj.attack("Adi");
+	//obj.attack("Adi");
 	return (0);
 }
