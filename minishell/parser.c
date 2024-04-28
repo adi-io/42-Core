@@ -22,14 +22,15 @@ t_parser_tools	init_parser_tools(t_lexer *lexer_list, t_tools *tools)
 	parser_tools.tools = tools;
 	return (parser_tools);
 }
+
 int	parser(t_tools	*tools)
 {
 	t_simple_cmds	*node;
 	t_parser_tools	parser_tools;
+	int	i;
 
+	i = 0;
 	tools -> simple_cmds = NULL;
-
-	printf("\n\nENTER SUCCESS\n");
 
 	ft_count_pipes(tools -> lexer_list, tools);
 	// if (tools -> lexer_list -> token == PIPE)
@@ -51,6 +52,12 @@ int	parser(t_tools	*tools)
 			ft_simple_cmd_addback(&tools -> simple_cmds, node);
 		tools -> lexer_list = parser_tools.lexer_list;
 	}
+	while (tools -> simple_cmds -> str[i])
+	{
+		printf("%s\n", tools -> simple_cmds -> str[i]);
+		i++;
+	}
+
 	return (EXIT_SUCCESS);
 }
 

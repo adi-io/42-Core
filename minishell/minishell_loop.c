@@ -87,7 +87,7 @@ int	count_quotes(char *str) //not sure if this work for all cases
 	}
 	if ((s > 0 && s % 2 != 0) || (d > 0 && d % 2 != 0))
 		return (1);
-	return (1);
+	return (0);
 }
 
 /* Incorrect Balanced Quote Logic: The logic ((s > 0 && s % 2 != 0) || (d > 0 && d % 2 != 0)) isn't a reliable way to determine if quotes are balanced. Consider these cases that would incorrectly return true (indicating unbalanced):
@@ -111,12 +111,11 @@ int	minishell_loop(t_tools *tools)
 	else if (!tools -> args[0])
 		return (EXIT_FAILURE);
 	add_history(tools -> args);
-	if (!count_quotes(tools -> args))
+	if (count_quotes(tools -> args))
 		return (EXIT_FAILURE);
 	// Bellow generally returns 1
 	if (token_reader(tools))
 		return (EXIT_FAILURE);
-	//ABOVE CODE WORKSSSS -- Parser SEGFAU. 24/04/20;58 NOTE
 	parser(tools);
 	//TODO Write excecuter
 	//TODO reset function

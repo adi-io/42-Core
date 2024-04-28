@@ -37,7 +37,7 @@ int	token_reader(t_tools *tools)
 	int	j;
 
 	i = 0;
-	printf("token reader args: %s", tools->args);
+	//printf("token reader args: %s", tools->args);
 	while (tools -> args[i])
 	{
 		j = 0;

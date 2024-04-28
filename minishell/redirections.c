@@ -58,18 +58,20 @@ void	rm_redirections(t_parser_tools *parser_tools)
 	t_lexer *tmp;
 
 	tmp = parser_tools -> lexer_list;
-	while (tmp -> token == 0 && tmp)
+	while (tmp && tmp -> token == 0)
 		tmp = tmp -> next;
 	if (!tmp || tmp -> token == PIPE)
 		return ;
-	if (tmp -> next -> token)
+	if (!tmp -> next)
+		return ;
+	if (!tmp -> next -> token)
 		return ;
 	if ((tmp -> token >= GREAT && tmp -> token <= LESS_LESS))
 		add_new_redirection(tmp, parser_tools);
 	rm_redirections(parser_tools);
 }
 
-void	add_new_redirection(t_lexer *tmp, t_parser_tools *parser_tools)
+int	add_new_redirection(t_lexer *tmp, t_parser_tools *parser_tools)
 {
 	t_lexer	*node;
 	int	index_1;
@@ -77,11 +79,12 @@ void	add_new_redirection(t_lexer *tmp, t_parser_tools *parser_tools)
 
 	node = ft_lexernew(ft_strdup(tmp -> next -> str), tmp -> token);
 	if (!node)
-		//handle error
+		return (1);
 	ft_lexaddback(&parser_tools -> redirections, node);
 	index_1 = tmp -> i;
 	index_2 = tmp -> next -> i;
 	ft_rm_lex(&parser_tools -> lexer_list, index_1);
 	ft_rm_lex(&parser_tools -> lexer_list, index_2);
 	parser_tools -> num_redirections++;
+	return (0);
 }

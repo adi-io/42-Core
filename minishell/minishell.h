@@ -21,7 +21,7 @@ int	parser(t_tools	*tools);
 void	ft_count_pipes(t_lexer *lexer_list, t_tools *tools);
 t_simple_cmds	*init_cmd(t_parser_tools *parser_tools);
 void	rm_redirections(t_parser_tools *parser_tools);
-void	add_new_redirection(t_lexer *tmp, t_parser_tools *parser_tools);
+int	add_new_redirection(t_lexer *tmp, t_parser_tools *parser_tools);
 
 int	token_reader(t_tools *tools);
 int	handle_token(char *str, int i, t_lexer **lexer_list);
