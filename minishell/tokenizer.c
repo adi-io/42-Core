@@ -60,11 +60,20 @@ int	handle_token(char *str, int i, t_lexer **lexer_list)
 
 	token = check_token(str[i]);
 	if (token == GREAT && check_token(str[i + 1]) == GREAT)
+	{
 		add_node(NULL, GREAT_GREAT, lexer_list);
+		return (2);
+	}
 	else if (token == LESS && check_token(str[i + 1]) == LESS)
+	{
 		add_node(NULL, LESS_LESS, lexer_list);
+		return (2);
+	}
 	else
+	{
 		add_node(NULL, token, lexer_list);
+		return (1);
+	}
 	return (0);
 }
 

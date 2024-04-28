@@ -33,8 +33,8 @@ int	parser(t_tools	*tools)
 	tools -> simple_cmds = NULL;
 
 	ft_count_pipes(tools -> lexer_list, tools);
-	// if (tools -> lexer_list -> token == PIPE)
-		//handle error
+	if (tools -> lexer_list -> token == PIPE)
+		return (1);
 
 	while (tools -> lexer_list)
 	{
@@ -44,6 +44,7 @@ int	parser(t_tools	*tools)
 				//handle errror
 		parser_tools = init_parser_tools(tools -> lexer_list, tools);
 		node = init_cmd(&parser_tools);
+		printf("Parsed command %d: %s\n", i, node->str[1]);
 		if (!node)
 			return (1);//handle error
 		if (!tools -> simple_cmds)
@@ -52,12 +53,6 @@ int	parser(t_tools	*tools)
 			ft_simple_cmd_addback(&tools -> simple_cmds, node);
 		tools -> lexer_list = parser_tools.lexer_list;
 	}
-	while (tools -> simple_cmds -> str[i])
-	{
-		printf("%s\n", tools -> simple_cmds -> str[i]);
-		i++;
-	}
-
 	return (EXIT_SUCCESS);
 }
 

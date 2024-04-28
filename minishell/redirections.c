@@ -39,7 +39,9 @@ t_simple_cmds	*init_cmd(t_parser_tools *parser_tools)
 	rm_redirections(parser_tools);
 	arg_size = count_args(parser_tools -> lexer_list);
 	str = ft_calloc(arg_size + 1, sizeof(char *));
-	//if (!str)
+	if (!str)
+		return (0);
+	tmp = parser_tools -> lexer_list;
 	while (arg_size > 0)
 	{
 		if (tmp -> str)
