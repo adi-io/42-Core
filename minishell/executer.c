@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:22:08 by mman              #+#    #+#             */
-/*   Updated: 2024/04/28 14:13:03 by mman             ###   ########.fr       */
+/*   Updated: 2024/04/28 14:51:12 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,61 @@ int	executer(t_tools *tools)
 	return (EXIT_SUCCESS);
 }
 
-int	execute_command(t_simple_cmds *cmd, t_tools *tools)
+//
+void	execute_command(t_simple_cmds *cmd, t_tools *tools)
 {
+	int	exit_code;
 
-	return (EXIT_FAILURE);
+	exit_code = 0;
+	if (cmd->redirections)
+		if (check_redirections(cmd))
+			exit (EXIT_FAILURE);
+	if (cmd->builtin != NULL)
+	{
+		exit_code = cmd->builtin(tools, cmd);
+		exit (exit_code);
+	}
+	else if (cmd->str[0][0] != '\0')
+		exit_code = fetch_func(cmd, tools);
+	exit (exit_code);
+}
+int	cmd_not_found(char *str)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	return (127);
+}
+
+// real deal
+// find (program) command, excecute it
+// use execve
+// fetch through pathnames
+int	fetch_func(t_simple_cmds *cmd, t_tools *tools)
+{
+	int		i;
+	char	*mycmd;
+
+	i = 0;
+	cmd->str = resplit_str(cmd->str);
+	if (!access(cmd->str[0], F_OK))
+		execve(cmd->str[0], cmd->str, tools->envp);
+	while (tools->paths[i])
+	{
+		mycmd = ft_strjoin(tools->paths[i], cmd->str[0]);
+		if (!access(mycmd, F_OK))
+			execve(mycmd, cmd->str, tools->envp);
+		free(mycmd);
+		i++;
+	}
+	return (cmd_not_found(cmd->str[0]));
+}
+
+int	check_redirections(t_simple_cmds *cmd)
+{
+	if (cmd)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	simple_executer_single(t_tools *tools)
@@ -62,16 +113,10 @@ int	simple_executer_single(t_tools *tools)
 	if (pid < 0)
 		return (EXIT_FAILURE);
 	else if (pid == 0)
-	{
-		status = execute_command(tools->simple_cmds, tools);
-		exit(status);
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			g_global.error_num = WEXITSTATUS(status);
-	}
+		execute_command(tools->simple_cmds, tools);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		g_global.error_num = WEXITSTATUS(status);
 	return (EXIT_SUCCESS);
 }
 //take in the CMD list and expands special cases such as "", '', or $

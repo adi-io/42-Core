@@ -16,7 +16,7 @@ INCLUDE = include
 # Sources
 SRC_FILES = errors minishell_loop minishell parser redirections \
 			tokenizer utils_lexer utils_redirections utils utils_two \
-			executer
+			executer utils_exe
 
 SRC = $(addsuffix .c, $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))

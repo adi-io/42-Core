@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:05:35 by mman              #+#    #+#             */
-/*   Updated: 2024/04/28 14:12:16 by mman             ###   ########.fr       */
+/*   Updated: 2024/04/28 14:51:36 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
+# include <errno.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <sys/types.h>
 # include <sys/types.h>
 # include "structs.h"
 # include "./libft/includes/libft.h"
@@ -63,13 +65,16 @@ int		executer(t_tools *tools);
 t_simple_cmds	*ft_simple_cmdsfirst(t_simple_cmds *list_of_cmds);
 int		simple_executer_single(t_tools *tools);
 t_simple_cmds	*expand_argument_call(t_tools *tools, t_simple_cmds *cmd);
-int		execute_command(t_simple_cmds *cmd, t_tools *tools);
-
+void		execute_command(t_simple_cmds *cmd, t_tools *tools);
+int		check_redirections(t_simple_cmds *cmd);
+int		fetch_func(t_simple_cmds *cmd, t_tools *tools);
+int		cmd_not_found(char *str);
 
 
 //ADDING PROTOTYPES NOTE23/04/
 int		ft_error(int error, t_tools *tools);
 void		reset_tools(t_tools *tools);
+char	**resplit_str(char **double_arr);
 
 
 //TOOLS FOR BUGCATCHING
