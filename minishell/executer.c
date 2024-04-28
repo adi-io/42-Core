@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:22:08 by mman              #+#    #+#             */
-/*   Updated: 2024/04/28 13:10:34 by mman             ###   ########.fr       */
+/*   Updated: 2024/04/28 13:55:08 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ int	executer(t_tools *tools)
 	return (EXIT_SUCCESS);
 }
 
+int	execute_command(t_simple_cmds *cmd, t_tools *tools)
+{
+
+	return (EXIT_FAILURE);
+}
+
 int	simple_executer_single(t_tools *tools)
 {
 	int	pid;
@@ -55,15 +61,14 @@ int	simple_executer_single(t_tools *tools)
 		return (EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		// int status = execute_command(cmd, tools);
+		status = execute_command(tools->simple_cmds, tools);
 		exit(status);
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			return (EXIT_SUCCESS);
-			// g_global.error_num = WEXITSTATUS(status);
+			g_global.error_num = WEXITSTATUS(status);
 	}
 	return (EXIT_SUCCESS);
 }
