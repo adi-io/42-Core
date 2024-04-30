@@ -44,7 +44,7 @@ int	parser(t_tools	*tools)
 				//handle errror
 		parser_tools = init_parser_tools(tools -> lexer_list, tools);
 		node = init_cmd(&parser_tools);
-		printf("Parsed command %d: %s\n", i, node->str[1]);
+		//printf("Parsed command %d: %s\n", i, node->str[1]);
 		if (!node)
 			return (1);//handle error
 		if (!tools -> simple_cmds)

@@ -1,9 +1,9 @@
-#include "FragTrap.hpp"
+#include "ScavTrap.hpp"
 
 int	main(void)
 {
-	FragTrap	obj("test");
+	ScavTrap	obj("test");
 
-	//obj.attack("Adi");
+	obj.guardGate();
 	return (0);
 }
