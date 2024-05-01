@@ -4,7 +4,7 @@ CLR2 = \033[0;36m
 CLR1 = \033[0;37m
 
 CC = cc
-CFLAGS = # -Wall -Werror -Wextra
+CFLAGS =  #-Wall -Werror -Wextra  -- there is a TON of -Werror=Unused NOTE 01/05
 RM = rm -rf
 
 # Directories
@@ -37,7 +37,7 @@ $(OBJ_DIR)/%.o: %.c
 # Rule to build the executable
 $(NAME): libft $(OBJ)
 	mkdir -p $(ERR_DIR)
-	$(CC) $(CFLAGS) -lreadline -o $@ $(OBJ) $(LIBFT) 2> $(ERR_DIR)/error.txt
+	$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBFT) -lreadline 2> $(ERR_DIR)/error.txt
 
 # @clear
 	@echo "$(CLR2)rdy$(DEF_COLOR)"
