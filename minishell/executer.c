@@ -87,8 +87,11 @@ int	fetch_func(t_simple_cmds *cmd, t_tools *tools)
 	while (tools->paths[i])
 	{
 		mycmd = ft_strjoin(tools->paths[i], cmd->str[0]);
+		// printf("%s -- cmd->str:%s\n", mycmd, cmd->str[4]);
 		if (!access(mycmd, F_OK))
-			execve(mycmd, cmd->str, tools->envp);
+			{
+				execve(mycmd, cmd->str, tools->envp);
+			}
 		free(mycmd);
 		i++;
 	}
