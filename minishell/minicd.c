@@ -83,11 +83,10 @@ void	change_path(t_tools *tools)
 
 int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 {
-	int	res;
+	int		res;
+	char	*new_pwd;
 
 	printf(" -- I am called (says mini_cd)");
-	tools->pwd = ft_strdup(getenv("PWD"));
-	tools->old_pwd = ft_strdup(getenv("PWD"));
 	printf(" -- pwd before cd: %s -- ", tools->pwd);
 	printf(" -- simple_cmd->str[1] is %s -- ", simple_cmd->str[1]);
 	if (!simple_cmd -> str[1])
@@ -99,13 +98,28 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 	}
 	else
 	{
+		printf(" -- I am trying to cd to %s --", simple_cmd->str[1]);
 		res = chdir(simple_cmd->str[1]);
 	}
 	if (res != 0)
 		return (EXIT_FAILURE);
+	else
+	{
+		// Update PWD and OLDPWD
+		printf("\n\n\nlocated\n\n");
+        free(tools->old_pwd); // Free old value to avoid memory leaks
+        tools->old_pwd = tools->pwd; 
+        new_pwd = getcwd(NULL, 0); // Get the new working directory
+        if (!new_pwd) {
+            perror("getcwd");
+            return EXIT_FAILURE; 
+        }
+        tools->pwd = new_pwd;
+	}
 	// printf("res: %d\n", res);
 //	change_path(tools);
 //	add_path_to_env(tools);
+
 	printf(" -- EXIT SUCCESS (minicd) --");
 	return(EXIT_SUCCESS);
 }

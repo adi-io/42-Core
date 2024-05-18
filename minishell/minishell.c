@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:36:13 by agadkari          #+#    #+#             */
-/*   Updated: 2024/05/18 23:43:47 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 01:47:45 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ int	main(int argc, char **argv, char **envp)
 	// printf("%i\n\n\n%s\n\n\n", argc, argv[1]);
 	tools.envp = ft_memmory(envp);
 	// envpprint(tools);
-	find_pwd(tools);
 	init_tools(&tools);
-	printf("\n\n-------\nWelcome! %s | MINISHELL™:\n", getenv("LOGNAME"));
+	printf("\n\n-------\nWelcome! %s | MINISHELL™:\n", tools.logname);
 	// t_simple_cmds *cmd = malloc(sizeof(t_simple_cmds));
 	// cmd->str[0] = ft_strdup("pwd");
 	minishell_loop(&tools);

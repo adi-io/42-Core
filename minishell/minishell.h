@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:05:35 by mman              #+#    #+#             */
-/*   Updated: 2024/04/28 14:51:36 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 01:46:31 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_tokens	check_token(int c);
 int		add_node(char *str, t_tokens token, t_lexer **lexer_list);
 char		**ft_memmory(char **ptr);
 int		init_tools(t_tools *tools);
-int		find_pwd(t_tools tools);
+int		find_pwd(t_tools *tools);
 char		*find_path(char **envp);
 int		parse_envp(t_tools *tools);
 

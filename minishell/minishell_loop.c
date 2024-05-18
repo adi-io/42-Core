@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:59:26 by agadkari          #+#    #+#             */
-/*   Updated: 2024/05/19 00:03:53 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 01:18:36 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int	minishell_loop(t_tools *tools)
 	int	i;
 
 	i = 0;
+	printf("%s ", tools->pwd);
 	temp = readline("$> ");
 	if (temp == NULL)
 		return (-1);
