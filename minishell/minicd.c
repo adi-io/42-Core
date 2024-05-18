@@ -89,10 +89,14 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 	tools->pwd = ft_strdup(getenv("PWD"));
 	tools->old_pwd = ft_strdup(getenv("PWD"));
 	printf(" -- pwd before cd: %s -- ", tools->pwd);
+	printf(" -- simple_cmd->str[1] is %s -- ", simple_cmd->str[1]);
 	if (!simple_cmd -> str[1])
-		res = goto_path(tools, "HOME=");
+		res = goto_path(tools, "HOME="); // if only cd is called, returns to home dir
 	else if (ft_strncmp(simple_cmd->str[1], "-", 1) == 0)
-		res = goto_path(tools, "OLDPWD=");
+	{
+		res = goto_path(tools, "OLDPWD="); // if cd - is called, goes to oldpwd and prints oldpwd
+		printf("\n%s\n", tools->old_pwd); //  if cd - is called in bash, and this is the first cd of the session, following is printed "bash: cd: OLDPWD not set"
+	}
 	else
 	{
 		res = chdir(simple_cmd->str[1]);
