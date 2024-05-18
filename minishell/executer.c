@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:22:08 by mman              #+#    #+#             */
-/*   Updated: 2024/04/28 19:10:28 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 00:04:30 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ int	executer_enter(t_tools *tools)
 {
 	if (tools->pipes == 0)
 	{
-		printf("Single exe called\n");
-		simple_executer_single(tools->simple_cmds, tools);
+		printf(" --  Single exe called (no pipes detected) -- ");
+		if(simple_executer_single(tools->simple_cmds, tools) == EXIT_FAILURE)
+			return(EXIT_FAILURE);
 	}
 	else
 	{
-		printf("Only single commnnd mode enabled");
+		printf(" -- Only single command mode enabled --");
 		//executer(tools);
 	}
 	return (EXIT_SUCCESS);
@@ -121,6 +122,7 @@ t_simple_cmds	*expand_argument_call(t_tools *tools, t_simple_cmds *cmd)
 		cmd -> redirections = cmd -> redirections -> next;
 	}
 	cmd -> redirections = start;
+	printf("-- Expender found this as the position 0: %s", cmd->str[0]);
 	return(cmd);
 }
 
@@ -130,11 +132,16 @@ int	simple_executer_single(t_simple_cmds *cmd, t_tools *tools)
 	int	status;
 
 	tools->simple_cmds = expand_argument_call(tools, tools->simple_cmds);
-	printf ("Expander succesfully execuated\n");
-	if (1)
+	if (!ft_strncmp(tools->simple_cmds->str[0], "cd", 2))
 	{
+		// printf("Command: %s\n", cmd->str[0]);
 		g_global.error_num = mini_cd(tools, cmd);
 		return (0);
+	}
+	else
+	{
+		printf("-- not implemented yet");
+		return(EXIT_FAILURE);
 	}
 	printf ("lets stop here now\n");
 	return (0);

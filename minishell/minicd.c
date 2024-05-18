@@ -85,7 +85,10 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	int	res;
 
-	printf("I am called\n");
+	printf(" -- I am called (says mini_cd)");
+	tools->pwd = ft_strdup(getenv("PWD"));
+	tools->old_pwd = ft_strdup(getenv("PWD"));
+	printf(" -- pwd before cd: %s -- ", tools->pwd);
 	if (!simple_cmd -> str[1])
 		res = goto_path(tools, "HOME=");
 	else if (ft_strncmp(simple_cmd->str[1], "-", 1) == 0)
@@ -96,9 +99,9 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 	}
 	if (res != 0)
 		return (EXIT_FAILURE);
-	printf("res: %d\n");
-	printf("%s\n", tools -> pwd);
+	// printf("res: %d\n", res);
 //	change_path(tools);
 //	add_path_to_env(tools);
+	printf(" -- EXIT SUCCESS (minicd) --");
 	return(EXIT_SUCCESS);
 }

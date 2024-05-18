@@ -6,13 +6,14 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:36:13 by agadkari          #+#    #+#             */
-/*   Updated: 2024/04/28 16:09:15 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/18 23:43:47 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //todo: https://saturncloud.io/blog/difference-between-single-and-double-quotes-in-bash/#example-single-quotes
+// 
 
 int	main(int argc, char **argv, char **envp)
 {

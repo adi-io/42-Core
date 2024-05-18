@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:31:12 by agadkari          #+#    #+#             */
-/*   Updated: 2024/04/28 10:59:48 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 00:13:58 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,29 @@ int	init_tools(t_tools *tools)
 //Stores them to tools.pwd & tools.old_pwd
 int	find_pwd(t_tools tools)
 {
-// 	char	*env_pwd;
+	char	*env_pwd;
 // 	char	*env_old_pwd;
 	int		i;
 
 	i = 0;
-	// editing this 23/04/2024 MMAN -- its possible to use the getenv func. instead NOTE
-	while (tools.envp[i])
-	{
-		if (!ft_strncmp(tools.envp[i], "PWD=", 4))
-			tools.pwd = ft_substr(tools.envp[i], 4, ft_strlen(tools.envp[i]) - 4);
-		if (!ft_strncmp(tools.envp[i], "OLDPWD=", 7))
-			tools.old_pwd = ft_substr(tools.envp[i], 7, ft_strlen(tools.envp[i]) - 7);
-		i++;
-	}
+	// // editing this 23/04/2024 MMAN -- its possible to use the getenv func. instead NOTE
+	// while (tools.envp[i])
+	// {
+	// 	if (!ft_strncmp(tools.envp[i], "PWD=", 4))
+	// 		tools.pwd = ft_substr(tools.envp[i], 4, ft_strlen(tools.envp[i]) - 4);
+	// 	if (!ft_strncmp(tools.envp[i], "OLDPWD=", 7))
+	// 		tools.old_pwd = ft_substr(tools.envp[i], 7, ft_strlen(tools.envp[i]) - 7);
+	// 	i++;
+	// }
 	// tools -> pwd = ft_strtrim("OLDPWD=", tools->envp[8]);
 	// tools.old_pwd = ft_strtrim("OLDPWD=", tools.envp[8]);
 	// // couldnt find PWD= records, NOTE
-	// env_pwd = getenv("PWD");
+	env_pwd = getenv("PWD");
 	// env_old_pwd = getenv("OLDPWD");
-	// tools.pwd = ft_strdup(env_old_pwd);
-	// tools.old_pwd = ft_strdup(env_old_pwd);
-	printf("PWD %s\n", tools.pwd);
-	printf("OLDPWD : %s", tools.old_pwd);
+	tools.pwd = ft_strdup(env_pwd);
+	// // tools.old_pwd = ft_strdup(env_old_pwd);
+	// printf("PWD %s\n", tools.pwd);
+	// printf("OLDPWD : %s", tools.old_pwd);
 	return (0);
 }
 
