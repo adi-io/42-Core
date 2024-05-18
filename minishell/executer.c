@@ -20,19 +20,25 @@ t_global	g_global;
 int	executer_enter(t_tools *tools)
 {
 	if (tools->pipes == 0)
-		simple_executer_single(tools);
+	{
+		printf("Single exe called\n");
+		simple_executer_single(tools->simple_cmds, tools);
+	}
 	else
-		executer(tools);
+	{
+		printf("Only single commnnd mode enabled");
+		//executer(tools);
+	}
 	return (EXIT_SUCCESS);
 }
 
 // tools-> will be taking in tools->simple_cmds
 int	executer(t_tools *tools)
 {
-	int	end[2];
-	int	fd_in;
+	//int	end[2];
+	//int	fd_in;
 
-	fd_in = STDIN_FILENO;
+	//fd_in = STDIN_FILENO;
 	while (tools->simple_cmds)
 	{
 		// LOGIC TO BE IMPLEMENTED™
@@ -102,18 +108,41 @@ int	check_redirections(t_simple_cmds *cmd)
 	return (EXIT_SUCCESS);
 }
 
-int	simple_executer_single(t_tools *tools)
+t_simple_cmds	*expand_argument_call(t_tools *tools, t_simple_cmds *cmd)
+{
+	t_lexer	*start;
+
+	cmd ->str =  expander(tools, cmd->str);
+	start = cmd -> redirections;
+	while (cmd -> redirections)
+	{
+		if (cmd -> redirections -> token != LESS_LESS)
+			cmd -> redirections -> str = expand_str(tools, cmd -> redirections -> str);
+		cmd -> redirections = cmd -> redirections -> next;
+	}
+	cmd -> redirections = start;
+	return(cmd);
+}
+
+int	simple_executer_single(t_simple_cmds *cmd, t_tools *tools)
 {
 	int	pid;
 	int	status;
 
 	tools->simple_cmds = expand_argument_call(tools, tools->simple_cmds);
-	//HERE: Handle the 4 special-case builtins
-	//CD,    EXPORT,    UNSET,   EXIT
+	printf ("Expander succesfully execuated\n");
+	if (1)
+	{
+		g_global.error_num = mini_cd(tools, cmd);
+		return (0);
+	}
+	printf ("lets stop here now\n");
+	return (0);
 
-	//HERE: Create redirection-influenced file-generator
 
+	//? send_heredoc(tools, cmd);
 	pid = fork();
+	printf("pid: %d\n", pid);
 	if (pid < 0)
 		return (EXIT_FAILURE);
 	else if (pid == 0)
@@ -123,10 +152,4 @@ int	simple_executer_single(t_tools *tools)
 		g_global.error_num = WEXITSTATUS(status);
 	return (EXIT_SUCCESS);
 }
-//take in the CMD list and expands special cases such as "", '', or $
-t_simple_cmds	*expand_argument_call(t_tools *tools, t_simple_cmds *cmd)
-{
-	if (tools)
-		return (cmd);
-	return(cmd);
-}
+

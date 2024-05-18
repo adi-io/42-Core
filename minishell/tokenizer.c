@@ -27,25 +27,26 @@ int	rem_spaces(char *str, int i)
 	return (j);
 }
 
-// MMAN wokin on DS RIGHT NOOOOWWWWW   --- start APR 24 21:05
-// if it finds a TOKEN it returns 0
-// if ti sfinds a WORD ("") it returns 0
-// else it returns 1
 int	token_reader(t_tools *tools)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	//printf("token reader args: %s", tools->args);
 	while (tools -> args[i])
 	{
 		j = 0;
 		i += rem_spaces(tools -> args, i);
-		if (check_token(tools -> args[i]))
-			j = (handle_token(tools -> args, i, &tools -> lexer_list));
+		if (check_token(tools->args[i]))
+		{
+		//	printf("Found token: %c\n", tools->args[i]);
+			j = handle_token(tools->args, i, &tools->lexer_list);
+		}
 		else
-			j = (read_words(i, tools -> args, &tools -> lexer_list));
+		{
+		//	printf("Reading word starting at index %d: '%s'\n", i, &tools->args[i]);
+			j = read_words(i, tools->args, &tools->lexer_list);
+		}
 		if (j < 0)
 			return (1);
 		i += j;
@@ -53,7 +54,6 @@ int	token_reader(t_tools *tools)
 	return (0);
 }
 
-// https://miro.com/app/board/uXjVKPNwyKk=/
 int	handle_token(char *str, int i, t_lexer **lexer_list)
 {
 	t_tokens	token;
@@ -82,7 +82,7 @@ t_tokens	check_token(int c)
 	static int	token_arr[3][2] ={
 		{'|', PIPE},
 		{'>', GREAT},
-		{'>', LESS},
+		{'<', LESS},
 	};
 	int	i;
 

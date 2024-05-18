@@ -25,7 +25,7 @@
 # include <sys/types.h>
 # include <sys/types.h>
 # include "structs.h"
-# include "./libft/includes/libft.h"
+# include "./libft/libft.h"
 # include "global.h"
 
 int		handle_quotes(int i, char *str, int c);
@@ -63,13 +63,18 @@ void		ft_simple_cmd_addback(t_simple_cmds **lst, t_simple_cmds *new);
 int		executer_enter(t_tools *tools);
 int		executer(t_tools *tools);
 t_simple_cmds	*ft_simple_cmdsfirst(t_simple_cmds *list_of_cmds);
-int		simple_executer_single(t_tools *tools);
+int		simple_executer_single(t_simple_cmds *cmd, t_tools *tools);
 t_simple_cmds	*expand_argument_call(t_tools *tools, t_simple_cmds *cmd);
 void		execute_command(t_simple_cmds *cmd, t_tools *tools);
 int		check_redirections(t_simple_cmds *cmd);
 int		fetch_func(t_simple_cmds *cmd, t_tools *tools);
 int		cmd_not_found(char *str);
 
+
+int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd);
+
+
+int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd);
 
 //ADDING PROTOTYPES NOTE23/04/
 int		ft_error(int error, t_tools *tools);
@@ -79,5 +84,18 @@ char	**resplit_str(char **double_arr);
 
 //TOOLS FOR BUGCATCHING
 void		envpprint(t_tools tools);
+
+char	*delete_quotes(char *str, char c);
+size_t	quotes_length(char *str);
+int	after_dol_lenght(char *str, int i);
+char	*char_to_str(char c);
+size_t	dollar_sign(char *str);
+int	question_mark(char **tmp);
+
+char	**expander(t_tools *tools, char **str);
+char	*expand_str(t_tools *tools, char *str);
+char	*detect_dollar_sign(t_tools *tools, char *str);
+int	handle_digit_after_dollar(int j, char *str);
+int	loop_if_dollar_sign(t_tools *tools, char *str, char **tmp, int j);
 
 #endif

@@ -2,7 +2,8 @@
 
 typedef enum s_tokens
 {
-	PIPE = 1,
+	WORD = 0,
+	PIPE,
 	GREAT,
 	GREAT_GREAT,
 	LESS,

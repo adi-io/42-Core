@@ -66,10 +66,11 @@ void	rm_redirections(t_parser_tools *parser_tools)
 		return ;
 	if (!tmp -> next)
 		return ;
-	if (!tmp -> next -> token)
+	if (tmp -> next -> token)
 		return ;
+
 	if ((tmp -> token >= GREAT && tmp -> token <= LESS_LESS))
-		add_new_redirection(tmp, parser_tools);
+			add_new_redirection(tmp, parser_tools);
 	rm_redirections(parser_tools);
 }
 

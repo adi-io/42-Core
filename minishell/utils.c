@@ -85,8 +85,8 @@ char	*find_path(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], "PATH:", 5))
-			return (ft_substr(envp[i], 5, ft_strlen(envp[i] - 5)));
+		if (ft_strncmp(envp[i], "PATH:", 5) == 0)
+			return (ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5));
 		i++;
 	}
 	return (strdup("\0"));

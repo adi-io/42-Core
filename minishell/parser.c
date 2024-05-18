@@ -23,15 +23,33 @@ t_parser_tools	init_parser_tools(t_lexer *lexer_list, t_tools *tools)
 	return (parser_tools);
 }
 
+
+// Helper function to add a string to a dynamically allocated string array
+void add_to_str_arr(char ***arr, char *str) {
+    int len = 0;
+    if (*arr != NULL) { // Check if arr is not NULL before dereferencing
+        while ((*arr)[len]) {
+            len++;
+        }
+    }
+
+    char **new_arr = realloc(*arr, (len + 2) * sizeof(char *));
+    if (!new_arr) {
+        perror("realloc failed");
+        exit(EXIT_FAILURE);
+    }
+
+    *arr = new_arr;
+    (*arr)[len] = ft_strdup(str);
+    (*arr)[len + 1] = NULL;
+}
+
 int	parser(t_tools	*tools)
 {
 	t_simple_cmds	*node;
 	t_parser_tools	parser_tools;
-	int	i;
 
-	i = 0;
 	tools -> simple_cmds = NULL;
-
 	ft_count_pipes(tools -> lexer_list, tools);
 	if (tools -> lexer_list -> token == PIPE)
 		return (1);
@@ -41,10 +59,9 @@ int	parser(t_tools	*tools)
 		if (tools -> lexer_list -> token && tools -> lexer_list -> token == PIPE)
 			ft_rm_lex(&tools -> lexer_list, tools -> lexer_list -> token);
 	//	if (handle_pipe_error(tools, tools -> lexer_list -> token))
-				//handle errror
+	//		return (EXIT_FAILURE);
 		parser_tools = init_parser_tools(tools -> lexer_list, tools);
 		node = init_cmd(&parser_tools);
-		//printf("Parsed command %d: %s\n", i, node->str[1]);
 		if (!node)
 			return (1);//handle error
 		if (!tools -> simple_cmds)
