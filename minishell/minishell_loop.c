@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:59:26 by agadkari          #+#    #+#             */
-/*   Updated: 2024/04/28 12:38:28 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 01:18:36 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,10 @@ int	count_quotes(char *str) //not sure if this work for all cases
 
 void print_commands(t_simple_cmds *head) {
     while (head != NULL) {
-        printf("Command: ");
+        printf("[SYSTEM CALL LOG] Command: ");
         for (int i = 0; head->str && head->str[i]; i++) {
             printf("%s ", head->str[i]);
         }
-        printf("\n");
 
         // Print redirections
         t_lexer *redir = head->redirections;
@@ -109,6 +108,7 @@ int	minishell_loop(t_tools *tools)
 	int	i;
 
 	i = 0;
+	printf("%s ", tools->pwd);
 	temp = readline("$> ");
 	if (temp == NULL)
 		return (-1);
@@ -126,8 +126,9 @@ int	minishell_loop(t_tools *tools)
 		return (EXIT_FAILURE);
 	parser(tools);
 	print_commands(tools -> simple_cmds);
-
 	executer_enter(tools);
+	printf("-- end of the loop [SYSTEM CALL LOG]\n");
 	//TODO reset function
+	minishell_loop(tools); //very simple loop by recursion
 	return (0);
 }

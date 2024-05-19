@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:05:35 by mman              #+#    #+#             */
-/*   Updated: 2024/04/28 14:51:36 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 03:40:43 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@
 # include "./libft/libft.h"
 # include "global.h"
 
+#ifndef FALSE
+# define FALSE 1
+#endif
+
+#ifndef TRUE
+# define TRUE 0
+#endif
+
 int		handle_quotes(int i, char *str, int c);
 int		read_words(int i, char *str, t_lexer **lexer_list);
 int		find_other_pair(char *str, int i, int *int_del, int del);
@@ -47,7 +55,7 @@ t_tokens	check_token(int c);
 int		add_node(char *str, t_tokens token, t_lexer **lexer_list);
 char		**ft_memmory(char **ptr);
 int		init_tools(t_tools *tools);
-int		find_pwd(t_tools tools);
+int		find_pwd(t_tools *tools);
 char		*find_path(char **envp);
 int		parse_envp(t_tools *tools);
 
@@ -70,8 +78,12 @@ int		check_redirections(t_simple_cmds *cmd);
 int		fetch_func(t_simple_cmds *cmd, t_tools *tools);
 int		cmd_not_found(char *str);
 
-
+int	ft_execute_builtins(t_simple_cmds *cmd, t_tools *tools);
 int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd);
+int	mini_pwd(t_tools *tools);
+int	mini_echo(t_tools *tools, t_simple_cmds *simple_cmd);
+void	mini_exit(t_tools *tools);
+
 
 
 int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd);

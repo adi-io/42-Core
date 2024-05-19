@@ -30,6 +30,7 @@ typedef struct s_tools
 	t_lexer					*lexer_list;
 	char					*pwd;
 	char					*old_pwd;
+	char					*logname;
 	int						pipes;
 	int						*pid;
 	bool					heredoc;

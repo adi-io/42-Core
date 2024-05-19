@@ -81,24 +81,47 @@ void	change_path(t_tools *tools)
 	tools->pwd = getcwd(NULL, sizeof(NULL));
 }
 
+//must be implemented like the builtin in bash
+//with only relative or absolut path
 int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 {
-	int	res;
+	int		res;
+	char	*new_pwd;
 
-	printf("I am called\n");
+	printf(" -- I am called (says mini_cd)");
+	printf(" -- pwd before cd: %s -- ", tools->pwd);
+	printf(" -- simple_cmd->str[1] is %s -- ", simple_cmd->str[1]);
 	if (!simple_cmd -> str[1])
-		res = goto_path(tools, "HOME=");
+		res = goto_path(tools, "HOME="); // if only cd is called, returns to home dir
 	else if (ft_strncmp(simple_cmd->str[1], "-", 1) == 0)
-		res = goto_path(tools, "OLDPWD=");
+	{
+		res = goto_path(tools, "OLDPWD="); // if cd - is called, goes to oldpwd and prints oldpwd
+		printf("\n%s\n", tools->old_pwd); //  if cd - is called in bash, and this is the first cd of the session, following is printed "bash: cd: OLDPWD not set"
+	}
 	else
 	{
+		printf(" -- I am trying to cd to %s --", simple_cmd->str[1]);
 		res = chdir(simple_cmd->str[1]);
 	}
 	if (res != 0)
 		return (EXIT_FAILURE);
-	printf("res: %d\n");
-	printf("%s\n", tools -> pwd);
+	else
+	{
+		// Update PWD and OLDPWD
+		printf("\n\n\nlocated\n\n");
+        free(tools->old_pwd); // Free old value to avoid memory leaks
+        tools->old_pwd = tools->pwd; 
+        new_pwd = getcwd(NULL, 0); // Get the new working directory
+        if (!new_pwd) {
+            perror("getcwd");
+            return EXIT_FAILURE; 
+        }
+        tools->pwd = new_pwd;
+	}
+	// printf("res: %d\n", res);
 //	change_path(tools);
 //	add_path_to_env(tools);
+
+	printf(" -- EXIT SUCCESS (minicd) --");
 	return(EXIT_SUCCESS);
 }

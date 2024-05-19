@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:57:22 by agadkari          #+#    #+#             */
-/*   Updated: 2024/04/28 11:56:41 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 00:19:25 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ int	parser(t_tools	*tools)
 
 	tools -> simple_cmds = NULL;
 	ft_count_pipes(tools -> lexer_list, tools);
+	if (tools->pipes > 0)
+	{
+		printf("!!! REFRAIN FROM USING PIPES (and redirects)!!\n\n\n");
+		return (EXIT_FAILURE);
+	}
 	if (tools -> lexer_list -> token == PIPE)
 		return (1);
 
@@ -85,4 +90,5 @@ void	ft_count_pipes(t_lexer *lexer_list, t_tools *tools)
 			tools ->pipes++;
 		arg = arg -> next;
 	}
+	// printf("found %i pipes\n", tools->pipes);
 }

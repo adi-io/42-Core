@@ -23,5 +23,9 @@ clean:
 
 re: fclean all
 
+# TEST RELATED MACROS:
+run: $(NAME)
+	./$(NAME)
+
 .PHONY: all clean fclean re
 
