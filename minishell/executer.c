@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:22:08 by mman              #+#    #+#             */
-/*   Updated: 2024/05/19 03:21:02 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 03:42:57 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,26 +132,9 @@ int	simple_executer_single(t_simple_cmds *cmd, t_tools *tools)
 	int	status;
 
 	tools->simple_cmds = expand_argument_call(tools, tools->simple_cmds);
-	if (!ft_strncmp(tools->simple_cmds->str[0], "cd", 2))
+	if (!ft_execute_builtins(cmd, tools))
 	{
-		// printf("Command: %s\n", cmd->str[0]);
-		g_global.error_num = mini_cd(tools, cmd);
-		return (0);
-	}
-	else if (!ft_strncmp(tools->simple_cmds->str[0], "pwd", 2))
-	{
-		// printf("Command: %s\n", cmd->str[0]);
-		g_global.error_num = mini_pwd(tools, cmd);
-		return (0);
-	}
-	else if (!ft_strncmp(tools->simple_cmds->str[0], "echo", 3))
-	{
-		// printf("Command: %s\n", cmd->str[0]);
-		g_global.error_num = mini_echo(tools, cmd);
-		return (0);
-	}
-	else
-	{
+		//todo ft_execute_non_builtins or some shit
 		printf("-- not implemented yet");
 		return(EXIT_FAILURE);
 	}

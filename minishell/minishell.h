@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:05:35 by mman              #+#    #+#             */
-/*   Updated: 2024/05/19 03:25:17 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 03:40:43 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,11 @@ int		check_redirections(t_simple_cmds *cmd);
 int		fetch_func(t_simple_cmds *cmd, t_tools *tools);
 int		cmd_not_found(char *str);
 
-
+int	ft_execute_builtins(t_simple_cmds *cmd, t_tools *tools);
 int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd);
-int	mini_pwd(t_tools *tools, t_simple_cmds *simple_cmd);
+int	mini_pwd(t_tools *tools);
 int	mini_echo(t_tools *tools, t_simple_cmds *simple_cmd);
+void	mini_exit(t_tools *tools);
 
 
 

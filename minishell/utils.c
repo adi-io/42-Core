@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:31:12 by agadkari          #+#    #+#             */
-/*   Updated: 2024/05/19 03:06:35 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 03:34:14 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	init_tools(t_tools *tools)
 //	g_global.in_heredoc = 0;
 	parse_envp(tools);
 	find_pwd(tools);
-	printf("to exit, press ctrl + c\n");
+	printf("to exit, press ctrl + c  OR   execute 'exit' \n");
 	//init signals for later
 	return (0);
 }
