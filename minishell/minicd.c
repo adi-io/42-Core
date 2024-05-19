@@ -81,6 +81,8 @@ void	change_path(t_tools *tools)
 	tools->pwd = getcwd(NULL, sizeof(NULL));
 }
 
+//must be implemented like the builtin in bash
+//with only relative or absolut path
 int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	int		res;

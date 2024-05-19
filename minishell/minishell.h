@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:05:35 by mman              #+#    #+#             */
-/*   Updated: 2024/05/19 01:46:31 by mman             ###   ########.fr       */
+/*   Updated: 2024/05/19 03:25:17 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@
 # include "structs.h"
 # include "./libft/libft.h"
 # include "global.h"
+
+#ifndef FALSE
+# define FALSE 1
+#endif
+
+#ifndef TRUE
+# define TRUE 0
+#endif
 
 int		handle_quotes(int i, char *str, int c);
 int		read_words(int i, char *str, t_lexer **lexer_list);
@@ -72,6 +80,9 @@ int		cmd_not_found(char *str);
 
 
 int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd);
+int	mini_pwd(t_tools *tools, t_simple_cmds *simple_cmd);
+int	mini_echo(t_tools *tools, t_simple_cmds *simple_cmd);
+
 
 
 int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd);
