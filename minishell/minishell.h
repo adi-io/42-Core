@@ -83,10 +83,14 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd);
 int	mini_pwd(t_tools *tools);
 int	mini_echo(t_tools *tools, t_simple_cmds *simple_cmd);
 void	mini_exit(t_tools *tools);
+int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd);
+int	mini_env(t_tools *tools, t_simple_cmds *simple_cmd);
+int	mini_unset(t_tools *tools, t_simple_cmds *simple_cmd);
 
-
-
-int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd);
+//builtin utils
+int	check_valid_identifier(char c);
+size_t	equal_sign(char *str);
+void	free_arr(char **split_arr);
 
 //ADDING PROTOTYPES NOTE23/04/
 int		ft_error(int error, t_tools *tools);
