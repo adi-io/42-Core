@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+t_global	g_global;
+
 int	question_mark(char **tmp)
 {
 	free(*tmp);

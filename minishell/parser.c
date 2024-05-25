@@ -12,83 +12,75 @@
 
 #include "minishell.h"
 
-t_parser_tools	init_parser_tools(t_lexer *lexer_list, t_tools *tools)
+t_simple_cmds	*init_cmd(t_parser_tools *parser_tools)
 {
-	t_parser_tools	parser_tools;
+	char	**str;
+	int		i;
+	int		arg_size;
+	t_lexer	*tmp;
 
-	parser_tools.lexer_list = lexer_list;
-	parser_tools.redirections = NULL;
-	parser_tools.num_redirections = 0;
-	parser_tools.tools = tools;
-	return (parser_tools);
-}
-
-
-// Helper function to add a string to a dynamically allocated string array
-void add_to_str_arr(char ***arr, char *str) {
-    int len = 0;
-    if (*arr != NULL) { // Check if arr is not NULL before dereferencing
-        while ((*arr)[len]) {
-            len++;
-        }
-    }
-
-    char **new_arr = realloc(*arr, (len + 2) * sizeof(char *));
-    if (!new_arr) {
-        perror("realloc failed");
-        exit(EXIT_FAILURE);
-    }
-
-    *arr = new_arr;
-    (*arr)[len] = ft_strdup(str);
-    (*arr)[len + 1] = NULL;
-}
-
-int	parser(t_tools	*tools)
-{
-	t_simple_cmds	*node;
-	t_parser_tools	parser_tools;
-
-	tools -> simple_cmds = NULL;
-	ft_count_pipes(tools -> lexer_list, tools);
-	if (tools->pipes > 0)
+	i = 0;
+	rm_redirections(parser_tools);
+	arg_size = count_args(parser_tools->lexer_list);
+	str = ft_calloc(arg_size + 1, sizeof(char *));
+	if (!str)
+		parser_error(1, parser_tools->tools, parser_tools->lexer_list);
+	tmp = parser_tools->lexer_list;
+	while (arg_size > 0)
 	{
-		printf("!!! REFRAIN FROM USING PIPES (and redirects)!!\n\n\n");
+		if (tmp->str)
+		{
+			str[i++] = ft_strdup(tmp->str);
+			ft_lexerdelone(&parser_tools->lexer_list, tmp->i);
+			tmp = parser_tools->lexer_list;
+		}
+		arg_size--;
+	}
+	return (ft_simple_cmdsnew(str,
+			parser_tools->num_redirections, parser_tools->redirections));
+}
+
+int	handle_pipe_errors(t_tools *tools, t_tokens token)
+{
+	if (token == PIPE)
+	{
+		parser_double_token_error(tools, tools->lexer_list,
+			tools->lexer_list->token);
 		return (EXIT_FAILURE);
 	}
-	if (tools -> lexer_list -> token == PIPE)
-		return (1);
-
-	while (tools -> lexer_list)
+	if (!tools->lexer_list)
 	{
-		if (tools -> lexer_list -> token && tools -> lexer_list -> token == PIPE)
-			ft_rm_lex(&tools -> lexer_list, tools -> lexer_list -> token);
-	//	if (handle_pipe_error(tools, tools -> lexer_list -> token))
-	//		return (EXIT_FAILURE);
-		parser_tools = init_parser_tools(tools -> lexer_list, tools);
-		node = init_cmd(&parser_tools);
-		if (!node)
-			return (1);//handle error
-		if (!tools -> simple_cmds)
-			tools -> simple_cmds = node;
-		else
-			ft_simple_cmd_addback(&tools -> simple_cmds, node);
-		tools -> lexer_list = parser_tools.lexer_list;
+		parser_error(0, tools, tools->lexer_list);
+		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
 
-void	ft_count_pipes(t_lexer *lexer_list, t_tools *tools)
+int	parser(t_tools *tools)
 {
-	t_lexer	*arg;
+	t_simple_cmds	*node;
+	t_parser_tools	parser_tools;
 
-	arg = lexer_list;
-	tools -> pipes = 0;
-	while (arg)
+	tools->simple_cmds = NULL;
+	count_pipes(tools->lexer_list, tools);
+	if (tools->lexer_list->token == PIPE)
+		return (parser_double_token_error(tools, tools->lexer_list,
+				tools->lexer_list->token));
+	while (tools->lexer_list)
 	{
-		if (arg -> token == PIPE)
-			tools ->pipes++;
-		arg = arg -> next;
+		if (tools->lexer_list && tools->lexer_list->token == PIPE)
+			ft_lexerdelone(&tools->lexer_list, tools->lexer_list->i);
+		if (handle_pipe_errors(tools, tools->lexer_list->token))
+			return (EXIT_FAILURE);
+		parser_tools = init_parser_tools(tools->lexer_list, tools);
+		node = init_cmd(&parser_tools);
+		if (!node)
+			parser_error(0, tools, parser_tools.lexer_list);
+		if (!tools->simple_cmds)
+			tools->simple_cmds = node;
+		else
+			ft_simple_cmdsadd_back(&tools->simple_cmds, node);
+		tools->lexer_list = parser_tools.lexer_list;
 	}
-	// printf("found %i pipes\n", tools->pipes);
+	return (EXIT_SUCCESS);
 }

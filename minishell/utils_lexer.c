@@ -12,76 +12,27 @@
 
 #include "minishell.h"
 
-t_lexer	*ft_rem_lexstr(t_lexer **lexer_list)
+t_simple_cmds	*ft_simple_cmdsnew(char **str,
+	int num_redirections, t_lexer *redirections)
 {
-	if ((*lexer_list) -> str)
-	{
-		free((*lexer_list) -> str);
-		(*lexer_list) -> str = NULL;
-	}
-	free (*lexer_list);
-	*lexer_list = NULL;
-	return (NULL);
-}
+	t_simple_cmds	*new_element;
 
-void	ft_rem_first(t_lexer **lexer_list)
-{
-	t_lexer *temp;
-
-	temp = *lexer_list;
-	*lexer_list = temp -> next;
-	ft_rem_lexstr(&temp);
-	if (*lexer_list)
-		(*lexer_list) -> prev = NULL;
-}
-
-void	ft_rm_lex(t_lexer **lexer_list, int key)
-{
-	t_lexer	*node;
-	t_lexer *prev;
-	t_lexer *start;
-
-	start = *lexer_list;
-	node = start;
-	if ((*lexer_list) -> i == key)
-	{
-		ft_rem_first(lexer_list);
-		return ;
-	}
-	while (node && node -> i != key)
-	{
-		prev = node;
-		node = node -> next;
-	}
-	if (node)
-		node -> prev = node -> next;
-	else
-		prev -> next = NULL;
-	if (prev -> next)
-		prev -> next -> prev = prev;
-	ft_rem_lexstr(&node);
-	*lexer_list = start;
-}
-
-t_lexer	*ft_lexernew(char *str, int token)
-{
-	t_lexer		*new_element;
-	static int	i = 0;
-
-	new_element = (t_lexer *)malloc(sizeof(t_lexer));
+	new_element = (t_simple_cmds *)malloc(sizeof(t_simple_cmds));
 	if (!new_element)
 		return (0);
 	new_element->str = str;
-	new_element->token = token;
-	new_element->i = i++;
+	new_element->builtin = builtin_arr(str[0]);
+	new_element->hd_file_name = NULL;
+	new_element->num_redirections = num_redirections;
+	new_element->redirections = redirections;
 	new_element->next = NULL;
 	new_element->prev = NULL;
 	return (new_element);
 }
 
-void	ft_lexaddback(t_lexer **lst, t_lexer *new)
+void	ft_simple_cmdsadd_back(t_simple_cmds **lst, t_simple_cmds *new)
 {
-	t_lexer	*tmp;
+	t_simple_cmds	*tmp;
 
 	tmp = *lst;
 	if (*lst == NULL)
@@ -93,4 +44,53 @@ void	ft_lexaddback(t_lexer **lst, t_lexer *new)
 		tmp = tmp->next;
 	tmp->next = new;
 	new->prev = tmp;
+}
+
+void	ft_simple_cmds_rm_first(t_simple_cmds **lst)
+{
+	t_simple_cmds	*tmp;
+
+	if (!*lst)
+		return ;
+	tmp = (*lst)->next;
+	ft_lexerclear(&(*lst)->redirections);
+	free(*lst);
+	*lst = tmp;
+}
+
+void	ft_simple_cmdsclear(t_simple_cmds **lst)
+{
+	t_simple_cmds	*tmp;
+	t_lexer			*redirections_tmp;
+
+	if (!*lst)
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		redirections_tmp = (*lst)->redirections;
+		ft_lexerclear(&redirections_tmp);
+		if ((*lst)->str)
+			free_arr((*lst)->str);
+		if ((*lst)->hd_file_name)
+			free((*lst)->hd_file_name);
+		free(*lst);
+		*lst = tmp;
+	}
+	*lst = NULL;
+}
+
+t_simple_cmds	*ft_simple_cmdsfirst(t_simple_cmds *map)
+{
+	int	i;
+
+	i = 0;
+	if (!map)
+		return (NULL);
+	while (map->prev != NULL)
+	{
+		map = map->prev;
+		i++;
+	}
+	return (map);
 }

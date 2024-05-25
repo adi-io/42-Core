@@ -12,82 +12,54 @@
 
 #include "minishell.h"
 
-int	count_args(t_lexer *lexer_list)
+char	*join_heredoc(char *str1, char *str2)
 {
-	t_lexer	*tmp;
-	int		i;
+	char	*ret;
+	char	*tmp;
 
-	i = 0;
-	tmp = lexer_list;
-	while (tmp && tmp->token != PIPE)
-	{
-		if (tmp->i >= 0)
-			i++;
-		tmp = tmp->next;
-	}
-	return (i);
-}
-
-t_simple_cmds	*init_cmd(t_parser_tools *parser_tools)
-{
-	char	**str;
-	int	i;
-	int	arg_size;
-	t_lexer	*tmp;
-
-	i = 0;
-	rm_redirections(parser_tools);
-	arg_size = count_args(parser_tools -> lexer_list);
-	str = ft_calloc(arg_size + 1, sizeof(char *));
-	if (!str)
-		return (0);
-	tmp = parser_tools -> lexer_list;
-	while (arg_size > 0)
-	{
-		if (tmp -> str)
-		{
-			str[i++] = ft_strdup(tmp->str);
-			ft_rm_lex(&parser_tools -> lexer_list, tmp -> i);
-			tmp = parser_tools -> lexer_list;
-		}
-		arg_size--;
-	}
-	return (ft_simple_cmdnew(str, parser_tools -> num_redirections, parser_tools -> redirections));
-}
-
-void	rm_redirections(t_parser_tools *parser_tools)
-{
-	t_lexer *tmp;
-
-	tmp = parser_tools -> lexer_list;
-	while (tmp && tmp -> token == 0)
-		tmp = tmp -> next;
-	if (!tmp || tmp -> token == PIPE)
-		return ;
-	if (!tmp -> next)
-		return ;
-	if (tmp -> next -> token)
-		return ;
-
-	if ((tmp -> token >= GREAT && tmp -> token <= LESS_LESS))
-			add_new_redirection(tmp, parser_tools);
-	rm_redirections(parser_tools);
+	if (!str2)
+		return (ft_strdup(str1));
+	tmp = ft_strjoin(str1, " ");
+	ret = ft_strjoin(tmp, str2);
+	free(tmp);
+	free(str2);
+	return (ret);
 }
 
 int	add_new_redirection(t_lexer *tmp, t_parser_tools *parser_tools)
 {
 	t_lexer	*node;
-	int	index_1;
-	int	index_2;
+	int		index_1;
+	int		index_2;
 
-	node = ft_lexernew(ft_strdup(tmp -> next -> str), tmp -> token);
+	node = ft_lexernew(ft_strdup(tmp->next->str), tmp->token);
 	if (!node)
-		return (1);
-	ft_lexaddback(&parser_tools -> redirections, node);
-	index_1 = tmp -> i;
-	index_2 = tmp -> next -> i;
-	ft_rm_lex(&parser_tools -> lexer_list, index_1);
-	ft_rm_lex(&parser_tools -> lexer_list, index_2);
-	parser_tools -> num_redirections++;
+		parser_error(1, parser_tools->tools, parser_tools->lexer_list);
+	ft_lexeradd_back(&parser_tools->redirections, node);
+	index_1 = tmp->i;
+	index_2 = tmp->next->i;
+	ft_lexerdelone(&parser_tools->lexer_list, index_1);
+	ft_lexerdelone(&parser_tools->lexer_list, index_2);
+	parser_tools->num_redirections++;
 	return (0);
+}
+
+void	rm_redirections(t_parser_tools *parser_tools)
+{
+	t_lexer	*tmp;
+
+	tmp = parser_tools->lexer_list;
+	while (tmp && tmp->token == 0)
+		tmp = tmp->next;
+	if (!tmp || tmp->token == PIPE)
+		return ;
+	if (!tmp->next)
+		parser_error(0, parser_tools->tools, parser_tools->lexer_list);
+	if (tmp->next->token)
+		parser_double_token_error(parser_tools->tools,
+			parser_tools->lexer_list, tmp->next->token);
+	if ((tmp->token >= GREAT
+			&& tmp->token <= LESS_LESS))
+		add_new_redirection(tmp, parser_tools);
+	rm_redirections(parser_tools);
 }

@@ -63,3 +63,4 @@ typedef struct s_global
 	int	in_cmd;
 	int	in_heredoc;
 }	t_global;
+

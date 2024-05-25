@@ -12,9 +12,6 @@
 
 #include "minishell.h"
 
-//todo: https://saturncloud.io/blog/difference-between-single-and-double-quotes-in-bash/#example-single-quotes
-// 
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_tools	tools;
@@ -24,17 +21,10 @@ int	main(int argc, char **argv, char **envp)
 		printf("This program does not accept arguments");
 		return (1);
 	}
-	// printf("%i\n\n\n%s\n\n\n", argc, argv[1]);
-	tools.envp = ft_memmory(envp);
-	// envpprint(tools);
-	init_tools(&tools);
-	printf("\n\n-------\nWelcome! %s | MINISHELL™:\n", tools.logname);
-	// t_simple_cmds *cmd = malloc(sizeof(t_simple_cmds));
-	// cmd->str[0] = ft_strdup("pwd");
+	tools.envp = ft_arrdup(envp);
+	find_pwd(&tools);
+	implement_tools(&tools);
+	printf("\n\n-------\nWelcome! dwag | It's MINISHELL:\n");
 	minishell_loop(&tools);
 	return (0);
 }
-
-
-
-// https://miro.com/welcomeonboard/VGZPY2g3R2ZTQmRDa2pCZXV6Q3lQYWZRNHZwYU1ubVZsdDRsSXZMcm92OEFMWWZWclNkQ3VMaTFxWGZOM1kwcHwzNDU4NzY0NTg3MDIyNjE1MzczfDI=?share_link_id=398465513011
