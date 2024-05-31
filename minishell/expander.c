@@ -14,18 +14,23 @@ size_t	equal_sign(char *str)
 	return (0);
 }
 
+
 int	loop_if_dollar_sign(t_tools *tools, char *str, char **tmp, int j)
 {
 	int		k;
 	int		ret;
 	char	*tmp2;
 	char	*tmp3;
-	while (tools -> envp[k])
+
+	k = 0;
+	ret = 0;
+	while (tools->envp[k])
 	{
-		if (ft_strncmp(str + j + 1, tools -> envp[k], equal_sign(tools -> envp[k]) - 1) == 0
-				&& after_dol_lenght(str, j) - j == (int)equal_sign(tools -> envp[k]))
+		if (ft_strncmp(str + j + 1, tools->envp[k],
+				equal_sign(tools->envp[k]) - 1) == 0
+			&& after_dol_lenght(str, j) - j == (int)equal_sign(tools->envp[k]))
 		{
-			tmp2 = ft_strdup(tools -> envp[k] + equal_sign(tools -> envp[k]));
+			tmp2 = ft_strdup(tools->envp[k] + equal_sign(tools->envp[k]));
 			tmp3 = ft_strjoin(*tmp, tmp2);
 			free(*tmp);
 			*tmp = tmp3;
@@ -35,7 +40,7 @@ int	loop_if_dollar_sign(t_tools *tools, char *str, char **tmp, int j)
 		k++;
 	}
 	if (ret == 0)
-		ret = after_dol_lenght(str, j);
+		ret = after_dol_lenght(str, j) - j;
 	return (ret);
 }
 
