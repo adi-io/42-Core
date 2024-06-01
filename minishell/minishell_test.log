@@ -1,0 +1,684 @@
+|> WITH echo $PWD; echo $OLDPWD; cd .; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ..; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test$
+/nfs/homes/mman/.cache/minishell_test$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ../..; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache$
+/nfs/homes/mman/.cache$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ../../..; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman$
+/nfs/homes/mman$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ../../../..; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes$
+/nfs/homes$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ../../../../..; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs$
+/nfs$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ../../../../../..; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/$
+/$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd /; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/$
+/$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ''; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd '' ''; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd '' '' ''; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ' '; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd:  : No such file or directory$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir d] echo $PWD; echo $OLDPWD; cd d ''; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+================================================================================
+
+|> WITH [SETUP mkdir d] echo $PWD; echo $OLDPWD; cd d d; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+================================================================================
+
+|> WITH [SETUP mkdir d] echo $PWD; echo $OLDPWD; cd d ' '; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+================================================================================
+
+|> WITH [EXPORTS HOME='/nfs/homes/mman'] echo $PWD; echo $OLDPWD; cd $HOME; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman$
+/nfs/homes/mman$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd /; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/$
+/$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd /.; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/$
+/$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd /./; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/$
+/$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd /././././; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/$
+/$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd //; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/$
+/$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ///; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/$
+/$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ////; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/$
+/$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd //////////////////////////////////////////////////////; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/$
+/$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: HOME not set$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [EXPORTS HOME='/nfs/homes/mman'] echo $PWD; echo $OLDPWD; cd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ' /'; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd:  /: No such file or directory$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ' / '; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd:  / : No such file or directory$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd '                  /'; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd:                   /: No such file or directory$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd '                  /              '; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd:                   /              : No such file or directory$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ' // '; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd:  // : No such file or directory$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd //home; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/home$
+/home$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd ' //home'; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd:  //home: No such file or directory$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH echo $PWD; echo $OLDPWD; cd '     //home    '; pwd; echo $PWD; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd:      //home    : No such file or directory$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 000 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 001 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 002 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 003 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 004 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 005 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 006 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 007 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 010 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 020 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 030 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 040 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 050 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 060 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 070 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 100 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 200 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 300 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 400 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 500 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 600 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 700 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 755 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 644 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 311 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 111 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 222 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+minishell: cd: d: Permission denied$
+$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 333 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+
+|> WITH [SETUP mkdir -m 0777 d] echo $PWD; echo $OLDPWD; cd d; echo $OLDPWD\n
+|  STATUS: expected 0 actual 1
+|---------------------------------------EXPECTED--------------------------------
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+$
+/nfs/homes/mman/.cache/minishell_test/sandbox$
+|---------------------------------------ACTUAL----------------------------------
+This program does not accept arguments
+================================================================================
+

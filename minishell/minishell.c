@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:36:13 by agadkari          #+#    #+#             */
-/*   Updated: 2024/06/01 17:10:16 by mman             ###   ########.fr       */
+/*   Updated: 2024/06/01 17:19:22 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	main(int argc, char **argv, char **envp)
 	tools.envp = ft_arrdup(envp);
 	find_pwd(&tools);
 	implement_tools(&tools);
-	printf("\n\n-------\nWelcome! dwag | It's MINISHELL:\n");
 	minishell_loop(&tools);
 	return (0);
 }
