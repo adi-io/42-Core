@@ -6,12 +6,11 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:31:12 by agadkari          #+#    #+#             */
-/*   Updated: 2024/05/19 03:34:14 by mman             ###   ########.fr       */
+/*   Updated: 2024/06/01 17:12:18 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	find_matching_quote(char *line, int i, int *num_del, int del)
 {

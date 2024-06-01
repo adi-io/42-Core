@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executer.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/01 17:09:33 by mman              #+#    #+#             */
+/*   Updated: 2024/06/01 17:09:36 by mman             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	executer_enter(t_tools *tools)
 {
 	if (tools->pipes == 0)
 	{
-		printf(" --  Single exe called (no pipes detected) -- ");
 		single_cmd(tools->simple_cmds, tools);
 	}
 	else
