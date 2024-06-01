@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:59:26 by agadkari          #+#    #+#             */
-/*   Updated: 2024/05/19 01:18:36 by mman             ###   ########.fr       */
+/*   Updated: 2024/06/01 17:22:33 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,10 @@ int	prepare_executor(t_tools *tools)
 int	minishell_loop(t_tools *tools)
 {
 	char	*tmp;
-	int	i;
+	int		i;
 
 	i = 0;
-	printf("%s ", tools->pwd);
-	tools -> args = readline("$> ");
+	tools -> args = readline("minishell $> ");
 	tmp = ft_strtrim(tools->args, " ");
 	free(tools->args);
 	tools->args = tmp;

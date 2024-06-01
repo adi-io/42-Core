@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minicd.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/01 17:09:50 by mman              #+#    #+#             */
+/*   Updated: 2024/06/01 17:09:51 by mman             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*ft_strdup1(const char *s1)
@@ -104,7 +116,6 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 	else
 	{
 		// Update PWD and OLDPWD
-		printf("\n\n\nlocated\n\n");
         free(tools->old_pwd); // Free old value to avoid memory leaks
         tools->old_pwd = tools->pwd; 
         new_pwd = getcwd(NULL, 0); // Get the new working directory
