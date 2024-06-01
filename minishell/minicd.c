@@ -88,9 +88,6 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 	int		res;
 	char	*new_pwd;
 
-	printf(" -- I am called (says mini_cd)");
-	printf(" -- pwd before cd: %s -- ", tools->pwd);
-	printf(" -- simple_cmd->str[1] is %s -- ", simple_cmd->str[1]);
 	if (!simple_cmd -> str[1])
 		res = goto_path(tools, "HOME="); // if only cd is called, returns to home dir
 	else if (ft_strncmp(simple_cmd->str[1], "-", 1) == 0)
@@ -100,7 +97,6 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 	}
 	else
 	{
-		printf(" -- I am trying to cd to %s --", simple_cmd->str[1]);
 		res = chdir(simple_cmd->str[1]);
 	}
 	if (res != 0)
@@ -121,7 +117,5 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 	// printf("res: %d\n", res);
 //	change_path(tools);
 //	add_path_to_env(tools);
-
-	printf(" -- EXIT SUCCESS (minicd) --");
 	return(EXIT_SUCCESS);
 }
