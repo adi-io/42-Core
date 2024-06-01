@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 01:59:24 by mman              #+#    #+#             */
-/*   Updated: 2024/05/19 03:26:14 by mman             ###   ########.fr       */
+/*   Updated: 2024/06/01 16:58:13 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	mini_echo(t_tools *tools, t_simple_cmds *simple_cmd)
 
     i = 1;
     toggle = FALSE;
-    printf("EXECUTING ECHO:\n\n\n");
     if (!simple_cmd->str[i])
         return (EXIT_FAILURE);
     else if (!ft_strncmp("-n", simple_cmd->str[i], 1))
@@ -38,6 +37,5 @@ int	mini_echo(t_tools *tools, t_simple_cmds *simple_cmd)
     }
     if (toggle)
         printf("\n");
-    printf("END OF ECHO\n");
     return (EXIT_SUCCESS);
 }
