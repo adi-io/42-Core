@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 01:52:32 by mman              #+#    #+#             */
-/*   Updated: 2024/05/19 03:36:25 by mman             ###   ########.fr       */
+/*   Updated: 2024/06/01 17:14:41 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 //pwd without any options
 int	mini_pwd(t_tools *tools)
 {
-    printf("\nEXECUTING PWD\n\n\n");
-	printf("\n%s\n", tools->pwd);
-    printf("END OF PWD\n\n\n");
+	printf("%s\n", tools->pwd);
 	return(EXIT_SUCCESS);
 }
