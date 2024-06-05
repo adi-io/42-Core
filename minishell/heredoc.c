@@ -55,7 +55,7 @@ char	*generate_heredoc_filename(void)
 	char		*file_name;
 
 	num = ft_itoa(i++);
-	file_name = ft_strjoin("build/.tmp_heredoc_file_", num);
+	file_name = ft_strjoin(".tmp_heredoc_file_", num);
 	free(num);
 	return (file_name);
 }
