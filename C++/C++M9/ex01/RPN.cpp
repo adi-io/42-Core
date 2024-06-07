@@ -1,73 +1,64 @@
-#include <iostream>
-#include <stack>
-#include <string>
+#include "RPN.hpp"
 
-int	main(int argc, char *argv[])
+RPN::RPN(std::string str)
 {
-	std::string str;
-	std::stack<int> stack;
 	int i;
 	int res;
 	int num;
 	char cur;
 
 	i = 0;
-	if (argc == 2)
+	while (i < str.size())
 	{
-		str = argv[1];
-		while (i < str.size())
-		{
-			while (i < str.size() && str[i] == ' ')
-				i++;
-
-			if (i >= str.size())
-				break;
-
-			if (isdigit(str[i]))
-				stack.push(str[i] - '0');
-			else
-			{
-				cur = str[i];
-
-				if (stack.size() < 2)
-				{
-					std::cerr << "Error: Insufficient operands for operation " << cur << std::endl;
-					return 1;
-				}
-
-				int num2 = stack.top();
-				stack.pop();
-
-				int num1 = stack.top();
-				stack.pop();
-
-				switch (cur)
-				{
-					case '+':
-						res = num1 + num2;
-						break;
-					case '-':
-						res = num1 - num2;
-						break;
-					case '/':
-						res = num1 / num2;
-						break;
-					case '*':
-						res = num1 * num2;
-						break;
-					default:
-						std::cerr << "Error: Unknown operator " << cur << std::endl;
-						return 1;
-				}
-				stack.push(res);
-			}
+		while (i < str.size() && str[i] == ' ')
 			i++;
-		}
-		res = stack.top();
-		std::cout << "Result: " << res << std::endl;
 
+		if (i >= str.size())
+			break;
+
+		if (isdigit(str[i]))
+			stack.push(str[i] - '0');
+		else
+		{
+			cur = str[i];
+
+			if (stack.size() < 2)
+			{
+				std::cerr << "Error: Insufficient operands for operation " << cur << std::endl;
+				exit (1);
+			}
+
+			int num2 = stack.top();
+			stack.pop();
+
+			int num1 = stack.top();
+			stack.pop();
+
+			switch (cur)
+			{
+				case '+':
+					res = num1 + num2;
+					break;
+				case '-':
+					res = num1 - num2;
+					break;
+				case '/':
+					res = num1 / num2;
+					break;
+				case '*':
+					res = num1 * num2;
+					break;
+				default:
+					std::cerr << "Error: Unknown operator " << cur << std::endl;
+					exit (1);
+			}
+			stack.push(res);
+		}
+		i++;
 	}
-	else
-		std::cout << "Invalid input" << std::endl;
-	return (0);
+	res = stack.top();
+	std::cout << "Result: " << res << std::endl;
+
 }
+
+RPN::~RPN() {}
