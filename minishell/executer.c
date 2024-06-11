@@ -12,23 +12,6 @@
 
 #include "minishell.h"
 
-int	executer_enter(t_tools *tools)
-{
-	if (tools->pipes == 0)
-	{
-		single_cmd(tools->simple_cmds, tools);
-	}
-	else
-	{
-		tools -> pid = ft_calloc(sizeof(int ), tools -> pipes + 2);
-		if (!tools -> pid)
-			return (ft_error(1, tools));
-		executor(tools);
-	}
-	g_global.in_cmd = 0;
-	return (EXIT_SUCCESS);
-}
-
 t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd)
 {
 	t_lexer	*start;

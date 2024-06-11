@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: agadkari <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 14:58:14 by agadkari          #+#    #+#             */
-/*   Updated: 2024/03/20 15:58:43 by agadkari         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -55,7 +43,7 @@ typedef struct s_philo
 	pthread_mutex_t	mut_nb_meals_had;
 	pthread_mutex_t	mut_last_eat_time;
 	u_int64_t		last_eat_time;
-}	t_philo;
+}t_philo;
 
 typedef struct s_data
 {
@@ -67,9 +55,9 @@ typedef struct s_data
 	u_int64_t		die_time;
 	u_int64_t		sleep_time;
 	u_int64_t		start_time;
-	pthread_mutex_t	mut_eat_time;
-	pthread_mutex_t	mut_die_time;
-	pthread_mutex_t	mut_sleep_time;
+	pthread_mutex_t	mut_eat_t;
+	pthread_mutex_t	mut_die_t;
+	pthread_mutex_t	mut_sleep_t;
 	pthread_mutex_t	mut_print;
 	pthread_mutex_t	mut_nb_philos;
 	pthread_mutex_t	mut_keep_iter;
@@ -79,50 +67,56 @@ typedef struct s_data
 	pthread_t		*philo_ths;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
-}	t_data;
+}t_data;
+
+void		*routine(void *philo_p);
+bool		philo_died(t_philo *philo);
+
+int			check_input(int argc, char **argv);
+int			wrong_input_check(int argc, char **argv);
+int			ft_atoi(char *str);
+void		print_instruction(void);
+
+int			init_data(t_data *data, int argc, char **argv);
+int			init_philos(t_data *data);
+int			init_forks(t_data *data);
+
+u_int64_t	get_time(void);
+void		ft_usleep(uint64_t time);
+void		wait_until(u_int64_t wakeup_time);
+
+void		*all_full_routine(void *data_p);
+void		*all_alive_routine(void *data_p);
 
 int			eat(t_philo *philo);
-int			take_forks(t_philo *philo);
 void		update_last_meal_time(t_philo *philo);
-void		wait_for_eating(t_data *data);
-void		update_meals_had(t_philo *philo);
-void		drop_right_fork(t_philo *philo);
-void		drop_left_fork(t_philo *philo);
-void		drop_forks(t_philo *philo);
+
+int			take_forks(t_philo *philo);
 int			take_right_fork(t_philo *philo);
 int			take_left_fork(t_philo *philo);
-bool		get_keep_iter(t_data *data);
-int			get_nb_meals_had(t_philo *philo);
-t_state		get_philo_state(t_philo *philo);
-int			is_philo_dead(t_philo *philo);
-int			get_nb_philos(t_data *data);
-void		*all_alive(void *arg);
-void		*all_full(void *arg);
-void		terminate_philos(t_data *data);
-bool		is_philo_full(t_data *data, t_philo *philo);
-int			philo_dead(t_philo *philo);
-int			philo_init(t_data *data, int argc, char **argv);
-int			philo_malloc(t_data *data);
-int			philo_create(t_data *data);
-int			fork_create(t_data *data);
-int			handle_one_philo(t_philo *philo);
-void		sweaper(t_data *data);
-void		print_mut(t_data *data, char *msg);
-void		print_msg(t_data *data, int id, char *msg);
-bool		nb_meals_option(t_data *data);
-int			ft_atoi(const char *str);
-void		ft_usleep(uint64_t sleep_time);
-int			ft_sleep(t_philo *philo);
-int			ft_think(t_philo *philo);
-void		set_philo_state(t_philo *philo, t_state state);
-void		set_keep_iter(t_data *data, bool state);
-void		*routine(void *data);
+void		drop_right_fork(t_philo *philo);
+void		drop_left_fork(t_philo *philo);
 
-uint64_t	get_last_meal_time(t_philo *philo);
-uint64_t	get_start_time(t_data *data);
-uint64_t	get_sleep_time(t_data *data);
+int			ft_sleep(t_philo *philo);
+int			think(t_philo *philo);
+
 uint64_t	get_die_time(t_data *data);
 uint64_t	get_eat_time(t_data *data);
-uint64_t	get_time(void);
+uint64_t	get_sleep_time(t_data *data);
+bool		get_keep_iter(t_data *data);
+uint64_t	get_start_time(t_data *data);
+int			get_nb_philos(t_data *data);
+t_state		get_philo_state(t_philo *philo);
+int			get_nb_meals_philo_had(t_philo *philo);
+uint64_t	get_last_eat_time(t_philo *philo);
+
+void		set_keep_iterating(t_data *data, bool set_to);
+void		set_philo_state(t_philo *philo, t_state state);
+
+bool		nb_meals_option(t_data *data);
+void		free_data(t_data *data);
+void		print_msg(t_data *data, int id, char *msg);
+void		print_mut(t_data *data, char *msg);
+int			handle_1_philo(t_philo *philo);
 
 #endif

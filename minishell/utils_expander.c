@@ -32,7 +32,7 @@ size_t	dollar_sign(char *str)
 			return (i + 1);
 		i++;
 	}
-	return  (0);
+	return (0);
 }
 
 char	*char_to_str(char c)
@@ -50,8 +50,8 @@ int	after_dol_lenght(char *str, int j)
 
 	i = j + 1;
 	while (str[i] != '\0' && str[i] != '$' && str[i] != ' '
-			&& str[i] != '\"' && str[i] != '\'' && str[i] != '=' && str[i] != '-'
-			&& str[i] != ':')
+		&& str[i] != '\"' && str[i] != '\'' && str[i] != '=' && str[i] != '-'
+		&& str[i] != ':')
 		i++;
 	return (i);
 }
@@ -62,7 +62,7 @@ size_t	quotes_length(char *str)
 	size_t	ret;
 
 	i = 0;
-	ret  = 0;
+	ret = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
@@ -70,25 +70,4 @@ size_t	quotes_length(char *str)
 		i++;
 	}
 	return (ret);
-}
-
-char	*delete_quotes(char *str, char c)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-		{
-			j = 0;
-			while (str[i + j] == c)
-				j++;
-			ft_strlcpy(&str[i], &str[i + j], strlen(str) - i);
-		}
-		i++;
-	}
-	return (str);
 }

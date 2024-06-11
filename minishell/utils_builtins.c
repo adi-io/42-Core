@@ -34,3 +34,23 @@ void	free_arr(char **split_arr)
 	}
 	free(split_arr);
 }
+
+char	*ft_strdup1(const char *s1)
+{
+	char	*s2;
+	size_t	size;
+	size_t	i;
+
+	i = 0;
+	size = strlen(s1);
+	s2 = (char *)malloc((size * sizeof(char)) + 1);
+	if (!s2)
+		return (0);
+	while (i < size)
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	s2[i] = '\0';
+	return (s2);
+}

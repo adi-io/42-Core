@@ -57,7 +57,6 @@ int	prepare_executor(t_tools *tools)
 	return (EXIT_SUCCESS);
 }
 
-
 int	minishell_loop(t_tools *tools)
 {
 	char	*tmp;

@@ -24,7 +24,7 @@ int	variable_exist(t_tools *tools, char *str)
 	while (tools -> envp[i])
 	{
 		if (ft_strncmp(tools -> envp[i],
-					str, equal_sign(tools -> envp[i])) == 0)
+				str, equal_sign(tools -> envp[i])) == 0)
 		{
 			free(tools -> envp[i]);
 			tools -> envp[i] = ft_strdup(str);
@@ -109,10 +109,10 @@ int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 		mini_env(tools, simple_cmd);
 	else
 	{
-		while(simple_cmd -> str[i])
+		while (simple_cmd -> str[i])
 		{
 			if (check_parameter(simple_cmd -> str[i]) == 0
-					&& variable_exist(tools, simple_cmd -> str[i]) == 0)
+				&& variable_exist(tools, simple_cmd -> str[i]) == 0)
 			{
 				if (simple_cmd->str[i])
 				{

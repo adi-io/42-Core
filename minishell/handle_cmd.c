@@ -12,6 +12,23 @@
 
 #include "minishell.h"
 
+int	executer_enter(t_tools *tools)
+{
+	if (tools->pipes == 0)
+	{
+		single_cmd(tools->simple_cmds, tools);
+	}
+	else
+	{
+		tools -> pid = ft_calloc(sizeof(int ), tools -> pipes + 2);
+		if (!tools -> pid)
+			return (ft_error(1, tools));
+		executor(tools);
+	}
+	g_global.in_cmd = 0;
+	return (EXIT_SUCCESS);
+}
+
 int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
 	int		i;
@@ -69,7 +86,6 @@ void	single_cmd(t_simple_cmds *cmd, t_tools *tools)
 	int	status;
 
 	tools->simple_cmds = call_expander(tools, tools->simple_cmds);
-
 	if ((void (*)())cmd->builtin == (void (*)())mini_cd ||
 			(void (*)())cmd->builtin == (void (*)())mini_exit ||
 			(void (*)())cmd->builtin == (void (*)())mini_pwd ||

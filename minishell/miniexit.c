@@ -12,10 +12,8 @@
 
 #include "minishell.h"
 
-//ensures no leaks (TODO) and exits
 void	mini_exit(t_tools *tools)
 {
-    //todo free all shit?
-    printf("\n");
+	printf("\n");
 	exit(EXIT_SUCCESS);
 }
