@@ -20,7 +20,7 @@ int	create_heredoc(t_lexer *heredoc, bool quotes,
 
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	line = readline(HEREDOC_MSG);
-	while (line && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str))
+	while (line && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str) + 1)
 		&& !g_global.stop_heredoc)
 	{
 		if (quotes == false)

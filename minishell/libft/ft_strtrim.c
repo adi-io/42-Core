@@ -12,24 +12,83 @@
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+int	begin_chars(char const *s1, char const *set)
 {
-	size_t	i;
-	size_t	j;
-	char	*str;
+	int	i;
+	int	j;
+	int	char_at_begin;
 
-	str = 0;
-	if (s1 != 0 && set != 0)
+	j = 0;
+	char_at_begin = 0;
+	while (s1[j])
 	{
 		i = 0;
-		j = ft_strlen(s1);
-		while (s1[i] && ft_strchr(set, s1[i]))
+		while (set[i])
+		{
+			if (s1[j] == set[i])
+			{
+				char_at_begin++;
+				break ;
+			}
 			i++;
-		while (s1[j - 1] && ft_strchr(set, s1[j - 1]) && j > i)
-			j--;
-		str = (char *)malloc(sizeof(char) * (j - i + 1));
-		if (str)
-			ft_strlcpy(str, &s1[i], j - i + 1);
+		}
+		if (set[i] == '\0')
+			return (char_at_begin);
+		j++;
 	}
-	return (str);
+	return (char_at_begin);
+}
+
+int	end_chars(char const *s1, char const *set, int len)
+{
+	int	i;
+	int	char_at_end;
+
+	len -= 1;
+	char_at_end = 0;
+	while (len >= 0)
+	{
+		i = 0;
+		while (set[i])
+		{
+			if (s1[len] == set[i])
+			{
+				char_at_end++;
+				break ;
+			}
+			i++;
+		}
+		if (set[i] == '\0')
+			return (char_at_end);
+		len--;
+	}
+	return (char_at_end);
+}
+
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	int		char_at_begin;
+	int		new_len;
+	int		len_s1;
+	char	*trimmed;
+	int		i;
+
+	if ((!s1 || !set) || (!s1 && !set))
+		return (0);
+	i = 0;
+	char_at_begin = begin_chars(s1, set);
+	len_s1 = ft_strlen(s1);
+	new_len = len_s1 - (char_at_begin + end_chars(s1, set, len_s1));
+	if (new_len <= 0)
+		new_len = 1;
+	trimmed = malloc((new_len * sizeof(char)) + 1);
+	if (!trimmed)
+		return (0);
+	while (i < new_len)
+	{
+		trimmed[i] = s1[char_at_begin + i];
+		i++;
+	}
+	trimmed[i] = '\0';
+	return (trimmed);
 }

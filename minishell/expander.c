@@ -24,8 +24,8 @@ int	loop_if_dollar_sign(t_tools *tools, char *str, char **tmp, int j)
 	while (tools->envp[k])
 	{
 		if (ft_strncmp(str + j + 1, tools->envp[k],
-				equal_sign(tools->envp[k]) - 1) == 0
-			&& after_dol_lenght(str, j) - j == (int)equal_sign(tools->envp[k]))
+					equal_sign(tools->envp[k]) - 1) == 0
+				&& after_dol_lenght(str, j) - j == (int)equal_sign(tools->envp[k]))
 		{
 			tmp2 = ft_strdup(tools->envp[k] + equal_sign(tools->envp[k]));
 			tmp3 = ft_strjoin(*tmp, tmp2);
@@ -69,7 +69,7 @@ char	*detect_dollar_sign(t_tools *tools, char *str)
 		if (str[i] == '$' && str[i + 1] == '?')
 			i += question_mark(&tmp);
 		else if (str[i] == '$' && (str[i + 1] != ' ' && (str[i + 1] != '"'
-					|| str[i + 2] != '\0')) && str[i + 1] != '\0')
+						|| str[i + 2] != '\0')) && str[i + 1] != '\0')
 			i += loop_if_dollar_sign(tools, str, &tmp, i);
 		else
 		{
@@ -85,11 +85,16 @@ char	*detect_dollar_sign(t_tools *tools, char *str)
 
 char	*expand_str(t_tools *tools, char *str)
 {
-	char	*tmp;
+	char    *tmp;
+	size_t  dollar_pos;
+
+	if (!str)
+		return NULL;
 
 	tmp = NULL;
-	if (str[dollar_sign(str) - 2] != '\'' && dollar_sign(str) != 0
-		&& str[dollar_sign(str)] != '\0')
+	dollar_pos = dollar_sign(str);
+
+	if (dollar_pos > 2 && str[dollar_pos - 2] != '\'' && str[dollar_pos] != '\0')
 	{
 		tmp = detect_dollar_sign(tools, str);
 		free(str);
@@ -102,21 +107,21 @@ char	*expand_str(t_tools *tools, char *str)
 
 char	**expander(t_tools *tools, char **str)
 {
-	int		i;
-	char	*tmp;
+	int i;
+	char *tmp;
 
 	i = 0;
-	tmp = NULL;
 	while (str[i] != NULL)
 	{
-		if (str[i][dollar_sign(str[i]) - 2] != '\'' && dollar_sign(str[i]) != 0
-				&& str[i][dollar_sign(str[i])] != '\0')
+		if (str[i][0] != '\0' && dollar_sign(str[i]) != 0 &&
+				str[i][dollar_sign(str[i]) - 1] != '\'' &&
+				str[i][dollar_sign(str[i])] != '\0')
 		{
 			tmp = detect_dollar_sign(tools, str[i]);
 			free(str[i]);
 			str[i] = tmp;
 		}
-		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0)
+		if (str[0] && ft_strncmp(str[0], "export", ft_strlen("export")) != 0)
 		{
 			str[i] = delete_quotes(str[i], '\"');
 			str[i] = delete_quotes(str[i], '\'');

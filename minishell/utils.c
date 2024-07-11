@@ -14,32 +14,48 @@
 
 int	find_matching_quote(char *line, int i, int *num_del, int del)
 {
-	int	j;
+	int		j;
+	size_t	len;
 
 	j = i + 1;
 	*num_del += 1;
-	while (line[j] && line[j] != del)
+	len = strlen(line);
+	while (j < (int)len && line[j] != del)
 		j++;
-	if (line[j] == del)
+	if (j < (int)len && line[j] == del)
 		*num_del += 1;
 	return (j - i);
 }
 
 int	count_quotes(char *line)
 {
-	int	i;
-	int	s;
-	int	d;
+	int		i;
+	int		j;
+	int		s;
+	int		d;
+	size_t	len;
 
 	s = 0;
+	j = 0;
 	d = 0;
 	i = -1;
-	while (line[++i])
+	len = ft_strlen(line);
+	while (++i < (int)len)
 	{
 		if (line[i] == 34)
-			i += find_matching_quote(line, i, &d, 34);
-		if (line[i] == 39)
-			i += find_matching_quote(line, i, &s, 39);
+		{
+			j = find_matching_quote(line, i, &d, 34);
+			if (i + j >= (int)len)
+				return (0);
+			i += j;
+		}
+		else if (line[i] == 39)
+		{
+			j = find_matching_quote(line, i, &s, 39);
+			if (i + j >= (int)len)
+				return (0);
+			i += j;
+		}
 	}
 	if ((d > 0 && d % 2 != 0) || (s > 0 && s % 2 != 0))
 		return (0);

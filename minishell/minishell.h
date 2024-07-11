@@ -51,7 +51,7 @@ int				(*builtin_arr(char *str))(t_tools *tools,
 					t_simple_cmds *simple_cmd);
 
 int				token_reader(t_tools *tools);
-int				read_words(int i, char *str, t_lexer **lexer_list);
+int				read_words(int i, char *str, t_lexer **lexer_list, size_t str_len);
 int				add_node(char *str, t_tokens token, t_lexer **lexer_list);
 int				skip_spaces(char *str, int i);
 int				is_whitespace(char c);
@@ -95,8 +95,8 @@ t_tokens		check_token(int c);
 int				mini_cd(t_tools *tools, t_simple_cmds *simple_cmd);
 int				mini_pwd(t_tools *tools);
 int				mini_echo(t_tools *tools, t_simple_cmds *simple_cmd);
-void			mini_exit(t_tools *tools);
 int				mini_export(t_tools *tools, t_simple_cmds *simple_cmd);
+int				mini_exit(t_tools *tools, t_simple_cmds *simple_cmd);
 int				mini_env(t_tools *tools, t_simple_cmds *simple_cmd);
 int				mini_unset(t_tools *tools, t_simple_cmds *simple_cmd);
 

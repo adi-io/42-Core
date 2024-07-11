@@ -41,7 +41,10 @@ int	check_parameter(char *str)
 
 	i = 0;
 	if (ft_isdigit(str[0]))
+	{
+		ft_putstr_fd("ERORR\n", 2);
 		return (EXIT_FAILURE);
+	}
 	if (equal_sign(str) == 0)
 		return (EXIT_FAILURE);
 	if (str[0] == '=')
