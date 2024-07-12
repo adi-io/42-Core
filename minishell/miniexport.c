@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:10:05 by mman              #+#    #+#             */
-/*   Updated: 2024/06/01 17:10:06 by mman             ###   ########.fr       */
+/*   Updated: 2024/07/12 21:38:56 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,30 @@ int	check_parameter(char *str)
 	return (EXIT_SUCCESS);
 }
 
-char	**whileloop_add_var(char **arr, char **rtn, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		if (arr[i + 1] == NULL)
-		{
-			rtn[i] = ft_strdup(str);
-			rtn[i + 1] = ft_strdup(arr[i]);
-		}
-		else
-			rtn[i] = ft_strdup(arr[i]);
-		if (rtn[i] == NULL)
-		{
-			free_arr(rtn);
-			return (rtn);
-		}
-		i++;
-	}
-	return (rtn);
+char **whileloop_add_var(char **arr, char **rtn, char *str) {
+    int i = 0;
+    while (arr[i] != NULL) {
+        rtn[i] = ft_strdup(arr[i]);
+        if (rtn[i] == NULL) {
+            // Free previously allocated strings in rtn before returning
+            while (i > 0) {
+                free(rtn[--i]);
+            }
+            free(rtn);
+            return (NULL);
+        }
+        i++;
+    }
+    rtn[i] = ft_strdup(str); // Assuming this is the correct place for this line
+    if (rtn[i] == NULL) {
+        // Free previously allocated strings in rtn before returning
+        while (i > 0) {
+            free(rtn[--i]);
+        }
+        free(rtn);
+        return (NULL);
+    }
+    return (rtn);
 }
 
 char	**add_var(char **arr, char *str)
@@ -108,6 +110,7 @@ int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 	int		i;
 
 	i = 0;
+	printf("someone called mini_export\n");
 	if (!simple_cmd -> str[1] || simple_cmd -> str[1][0] == '\0')
 		mini_env(tools, simple_cmd);
 	else
@@ -120,7 +123,7 @@ int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 				if (simple_cmd->str[i])
 				{
 					tmp = add_var(tools -> envp, simple_cmd -> str[i]);
-					free(tools -> envp);
+					free_arr(tools -> envp);
 					tools -> envp = tmp;
 				}
 			}

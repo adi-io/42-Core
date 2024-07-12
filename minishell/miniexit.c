@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 03:28:34 by mman              #+#    #+#             */
-/*   Updated: 2024/06/01 17:10:04 by mman             ###   ########.fr       */
+/*   Updated: 2024/07/12 21:06:43 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	free_tools(t_tools *tools)
 {
 	free_arr(tools->paths);
-	free_arr(tools->envp);
+	free_arr(tools->envp); // This line should free the memory allocated by ft_arrdup
 	free(tools->args);
 	ft_simple_cmdsclear(&tools->simple_cmds);
 	free(tools->pwd);

@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:09:43 by mman              #+#    #+#             */
-/*   Updated: 2024/06/01 17:09:44 by mman             ###   ########.fr       */
+/*   Updated: 2024/07/12 21:31:17 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 			execve(mycmd, cmd->str, tools->envp);
 			free(mycmd);
 			perror("execve");
+			printf("what");
 			exit(EXIT_FAILURE);
 		}
 		free(mycmd);

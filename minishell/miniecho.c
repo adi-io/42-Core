@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 01:59:24 by mman              #+#    #+#             */
-/*   Updated: 2024/06/01 17:09:54 by mman             ###   ########.fr       */
+/*   Updated: 2024/07/12 20:47:59 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	mini_echo(t_tools *tools, t_simple_cmds *simple_cmd)
 	{
 		printf ("%s", simple_cmd->str[i]);
 		if (simple_cmd->str[i + 1])
-			printf(" ");
-		i++;
+			printf(" ");		i++;
 	}
 	if (toggle)
 		printf("\n");
