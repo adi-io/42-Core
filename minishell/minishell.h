@@ -51,7 +51,8 @@ int				(*builtin_arr(char *str))(t_tools *tools,
 					t_simple_cmds *simple_cmd);
 
 int				token_reader(t_tools *tools);
-int				read_words(int i, char *str, t_lexer **lexer_list, size_t str_len);
+int				read_words(int i, char *str,
+					t_lexer **lexer_list, size_t str_len);
 int				add_node(char *str, t_tokens token, t_lexer **lexer_list);
 int				skip_spaces(char *str, int i);
 int				is_whitespace(char c);

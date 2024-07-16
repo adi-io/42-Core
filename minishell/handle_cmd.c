@@ -31,8 +31,8 @@ int	executer_enter(t_tools *tools)
 
 int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
-	int     i;
-	char    *mycmd;
+	int		i;
+	char	*mycmd;
 
 	i = 0;
 	cmd->str = resplit_str(cmd->str);
@@ -59,23 +59,21 @@ int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 	return (cmd_not_found(cmd->str[0]));
 }
 
-void    handle_cmd(t_simple_cmds *cmd, t_tools *tools)
+void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
-	int exit_code;
+	int	exit_code;
 
+	exit_code = 0;
 	if (!cmd || !tools)
 	{
 		fprintf(stderr, "Error: Null pointer in handle_cmd\n");
 		exit(1);
 	}
-
-	exit_code = 0;
 	if (cmd->redirections)
 	{
 		if (check_redirections(cmd))
 			exit(1);
 	}
-
 	if (cmd->builtin != NULL)
 	{
 		exit_code = cmd->builtin(tools, cmd);
@@ -106,22 +104,21 @@ void	dup_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in)
 	handle_cmd(cmd, tools);
 }
 
-void    single_cmd(t_simple_cmds *cmd, t_tools *tools)
+void	single_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
-	int pid;
-	int status;
+	int	pid;
+	int	status;
 
 	if (!cmd || !tools)
 	{
 		fprintf(stderr, "Error: Null pointer in single_cmd\n");
-		return;
+		return ;
 	}
-
-	tools->simple_cmds = call_expander(tools, tools->simple_cmds);
+	tools -> simple_cmds = call_expander(tools, tools -> simple_cmds);
 	if (!tools->simple_cmds)
 	{
 		fprintf(stderr, "Error: Expansion failed in single_cmd\n");
-		return;
+		return ;
 	}
 	if ((void (*)())cmd->builtin == (void (*)())mini_cd ||
 			(void (*)())cmd->builtin == (void (*)())mini_exit ||
@@ -130,9 +127,8 @@ void    single_cmd(t_simple_cmds *cmd, t_tools *tools)
 			(void (*)())cmd->builtin == (void (*)())mini_unset)
 	{
 		g_global.error_num = cmd->builtin(tools, cmd);
-		return;
+		return ;
 	}
-
 	send_heredoc(tools, cmd);
 	pid = fork();
 	if (pid < 0)

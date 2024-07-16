@@ -15,7 +15,7 @@
 void	free_tools(t_tools *tools)
 {
 	free_arr(tools->paths);
-	free_arr(tools->envp); // This line should free the memory allocated by ft_arrdup
+	free_arr(tools->envp);
 	free(tools->args);
 	ft_simple_cmdsclear(&tools->simple_cmds);
 	free(tools->pwd);

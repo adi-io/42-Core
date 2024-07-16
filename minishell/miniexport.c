@@ -58,30 +58,32 @@ int	check_parameter(char *str)
 	return (EXIT_SUCCESS);
 }
 
-char **whileloop_add_var(char **arr, char **rtn, char *str) {
-    int i = 0;
-    while (arr[i] != NULL) {
-        rtn[i] = ft_strdup(arr[i]);
-        if (rtn[i] == NULL) {
-            // Free previously allocated strings in rtn before returning
-            while (i > 0) {
-                free(rtn[--i]);
-            }
-            free(rtn);
-            return (NULL);
-        }
-        i++;
-    }
-    rtn[i] = ft_strdup(str); // Assuming this is the correct place for this line
-    if (rtn[i] == NULL) {
-        // Free previously allocated strings in rtn before returning
-        while (i > 0) {
-            free(rtn[--i]);
-        }
-        free(rtn);
-        return (NULL);
-    }
-    return (rtn);
+char	**whileloop_add_var(char **arr, char **rtn, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		rtn[i] = ft_strdup(arr[i]);
+		if (rtn[i] == NULL)
+		{
+			while (i > 0)
+				free(rtn[--i]);
+			free(rtn);
+			return (NULL);
+		}
+		i++;
+	}
+	rtn[i] = ft_strdup(str);
+	if (rtn[i] == NULL)
+	{
+		while (i > 0)
+			free(rtn[--i]);
+		free(rtn);
+		return (NULL);
+	}
+	return (rtn);
 }
 
 char	**add_var(char **arr, char *str)

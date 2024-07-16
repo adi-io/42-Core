@@ -30,7 +30,8 @@ int	mini_echo(t_tools *tools, t_simple_cmds *simple_cmd)
 	{
 		printf ("%s", simple_cmd->str[i]);
 		if (simple_cmd->str[i + 1])
-			printf(" ");		i++;
+			printf(" ");
+		i++;
 	}
 	if (toggle)
 		printf("\n");
