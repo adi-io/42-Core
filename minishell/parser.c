@@ -56,23 +56,27 @@ int	handle_pipe_errors(t_tools *tools, t_tokens token)
 	return (EXIT_SUCCESS);
 }
 
-int	parser(t_tools *tools)
+static int	handle_node(t_tools *tools, t_parser_tools *parser_tools)
 {
 	t_simple_cmds	*node;
-	t_parser_tools	parser_tools;
 
-	tools->simple_cmds = NULL;
-	if (!tools->lexer_list)
+	*parser_tools = init_parser_tools(tools->lexer_list, tools);
+	node = init_cmd(parser_tools);
+	if (!node)
 	{
-		return (EXIT_SUCCESS);
-	}
-	count_pipes(tools->lexer_list, tools);
-	if (tools->lexer_list->token == PIPE)
-	{
-		parser_double_token_error(tools, tools->lexer_list,
-			tools->lexer_list->token);
+		parser_error(0, tools, parser_tools->lexer_list);
 		return (EXIT_FAILURE);
 	}
+	if (!tools->simple_cmds)
+		tools->simple_cmds = node;
+	else
+		ft_simple_cmdsadd_back(&tools->simple_cmds, node);
+	tools->lexer_list = parser_tools->lexer_list;
+	return (EXIT_SUCCESS);
+}
+
+static int	process_lexer_list(t_tools *tools, t_parser_tools *parser_tools)
+{
 	while (tools->lexer_list)
 	{
 		if (tools->lexer_list->token == PIPE)
@@ -86,18 +90,25 @@ int	parser(t_tools *tools)
 		}
 		if (handle_pipe_errors(tools, tools->lexer_list->token))
 			return (EXIT_FAILURE);
-		parser_tools = init_parser_tools(tools->lexer_list, tools);
-		node = init_cmd(&parser_tools);
-		if (!node)
-		{
-			parser_error(0, tools, parser_tools.lexer_list);
+		if (handle_node(tools, parser_tools) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		}
-		if (!tools->simple_cmds)
-			tools->simple_cmds = node;
-		else
-			ft_simple_cmdsadd_back(&tools->simple_cmds, node);
-		tools->lexer_list = parser_tools.lexer_list;
 	}
 	return (EXIT_SUCCESS);
+}
+
+int	parser(t_tools *tools)
+{
+	t_parser_tools	parser_tools;
+
+	tools->simple_cmds = NULL;
+	if (!tools->lexer_list)
+		return (EXIT_SUCCESS);
+	count_pipes(tools->lexer_list, tools);
+	if (tools->lexer_list->token == PIPE)
+	{
+		parser_double_token_error(tools, tools->lexer_list,
+			tools->lexer_list->token);
+		return (EXIT_FAILURE);
+	}
+	return (process_lexer_list(tools, &parser_tools));
 }

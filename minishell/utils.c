@@ -27,35 +27,35 @@ int	find_matching_quote(char *line, int i, int *num_del, int del)
 	return (j - i);
 }
 
+static int	process_quotes(char *line, int *i
+		, int *quote_count, char quote_type)
+{
+	int	j;
+
+	j = find_matching_quote(line, *i, quote_count, quote_type);
+	if (*i + j >= (int)ft_strlen(line))
+		return (0);
+	*i += j;
+	return (1);
+}
+
 int	count_quotes(char *line)
 {
 	int		i;
-	int		j;
 	int		s;
 	int		d;
 	size_t	len;
 
 	s = 0;
-	j = 0;
 	d = 0;
 	i = -1;
 	len = ft_strlen(line);
 	while (++i < (int)len)
 	{
-		if (line[i] == 34)
-		{
-			j = find_matching_quote(line, i, &d, 34);
-			if (i + j >= (int)len)
-				return (0);
-			i += j;
-		}
-		else if (line[i] == 39)
-		{
-			j = find_matching_quote(line, i, &s, 39);
-			if (i + j >= (int)len)
-				return (0);
-			i += j;
-		}
+		if (line[i] == 34 && !process_quotes(line, &i, &d, 34))
+			return (0);
+		else if (line[i] == 39 && !process_quotes(line, &i, &s, 39))
+			return (0);
 	}
 	if ((d > 0 && d % 2 != 0) || (s > 0 && s % 2 != 0))
 		return (0);
