@@ -22,7 +22,10 @@ class	Serializer
 			return (reinterpret_cast<Data*> (raw));
 		}
 	private:
-		Serializer() {}
+		Serializer();
+		~Serializer();
+		Serializer(const Serializer& other);
+		Serializer& operator=(const Serializer& other);
 };
 
 #endif

@@ -42,51 +42,76 @@ void	BTC::parser()
 	file.close();
 }
 
-void	BTC::parser2()
-{
-	long i;
-	std::ifstream file("input.txt");
-	if (!file.is_open())
-	{
-		std::cout << "Input file is missing" << std::endl;
-		return ;
-	}
-	std::string line;
-	while (std::getline(file, line))
-	{
-		size_t	delim = line.find('|');
-		if (delim == std::string::npos)
-		{
-			//std::cerr << "Invalid format: " << line << std::endl;
-			continue ;
-		}
-		std::string date = line.substr(0, delim);
-		std::string value = line.substr(delim + 1);
+bool isValidDate(const std::string& date) {
+    if (date.length() != 10 || date[4] != '-' || date[7] != '-')
+        return false;
 
-		date.erase(date.find_last_not_of(" \n\r\t")+1);
-		value.erase(0, value.find_first_not_of(" \n\r\t"));
-		float fval;
-		try
-		{
-			fval = std::stof(value);
-		}
-		catch (const std::invalid_argument&)
-		{
-			fval = -42.42f;
-		}
-		try
-		{
-			i = std::stol(value);
-			if (i >= INT_MAX)
-				fval = -41.41f;
-		}
-		catch (const std::invalid_argument&)
-		{
-		}
-		inputData.emplace_back(date, fval);
+    int year, month, day;
+    try {
+        year = std::stoi(date.substr(0, 4));
+        month = std::stoi(date.substr(5, 2));
+        day = std::stoi(date.substr(8, 2));
+    } catch (...) {
+        return false;
+    }
 
-	}
-	file.close();
+    if (year < 1900 || year > 2023 ||
+        month < 1 || month > 12 ||
+        day < 1 || day > 31)
+        return false;
+
+    return true;
+}
+
+void BTC::parser2() {
+    std::ifstream file("input.txt");
+    if (!file.is_open()) {
+        std::cout << "Error: could not open file." << std::endl;
+        return;
+    }
+    if (file.peek() == std::ifstream::traits_type::eof()) {
+        std::cout << "Error: empty file" << std::endl;
+        return;
+    }
+
+    std::string line;
+    while (std::getline(file, line)) {
+        size_t delim = line.find('|');
+        if (delim == std::string::npos) {
+            std::cout << "Error: bad input => " << line << std::endl;
+            continue;
+        }
+
+        std::string date = line.substr(0, delim);
+        std::string value = line.substr(delim + 1);
+
+        date.erase(date.find_last_not_of(" \n\r\t")+1);
+        value.erase(0, value.find_first_not_of(" \n\r\t"));
+
+        if (!isValidDate(date)) {
+            std::cout << "Error: bad input => " << date << std::endl;
+            continue;
+        }
+
+        float fval;
+        try {
+            fval = std::stof(value);
+            if (fval > 1000) {
+                std::cout << "Error: too large a number." << std::endl;
+                continue;
+            }
+            if (fval < 0) {
+                std::cout << "Error: not a positive number." << std::endl;
+                continue;
+            }
+        } catch (...) {
+            std::cout << "Error: bad input => " << value << std::endl;
+            continue;
+        }
+
+        inputData.emplace_back(date, fval);
+    }
+    file.close();
 }
 
 void	BTC::print()

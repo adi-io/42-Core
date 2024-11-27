@@ -1,95 +1,85 @@
 #include "ScalarConverter.hpp"
+#include <cmath>
+#include <iomanip>
 
-ScalarConverter::ScalarConverter()
+ScalarConverter::ScalarConverter() {}
+ScalarConverter::~ScalarConverter() {}
+
+static bool isChar(const std::string& str)
 {
-	std::cout << "ScalarConverter initialized" << std::endl;
+    return (str.length() == 1 && !std::isdigit(str[0]));
 }
 
-std::string	helperfunc(std::string str, std::string toChar)
+static bool isPseudoLiteral(const std::string& str)
 {
-	if (str == "-inff" || str == "+inff" || str == "nanf" || str == "-inf"
-			|| str == "+inf" || str == "nan")
-		return (toChar = "imposible");
-	else
-		return (toChar = "");
+    return (str == "-inff" || str == "+inff" || str == "nanf" ||
+            str == "-inf" || str == "+inf" || str == "nan");
 }
 
-void	ScalarConverter::Scalar(std::string str)
+void ScalarConverter::convert(const std::string& literal)
 {
-	int	toInt;
-	float	toFloat;
-	double	toDouble;
-	long	checkint;
-	std::string	toChar = "";
+    if (isChar(literal))
+    {
+        char c = literal[0];
+        std::cout << "char: ";
+        if (std::isprint(c))
+            std::cout << "'" << c << "'" << std::endl;
+        else
+            std::cout << "Non displayable" << std::endl;
+        std::cout << "int: " << static_cast<int>(c) << std::endl;
+        std::cout << "float: " << static_cast<float>(c) << ".0f" << std::endl;
+        std::cout << "double: " << static_cast<double>(c) << ".0" << std::endl;
+        return;
+    }
 
-	toInt = 0;
-	toFloat = 0;
-	toDouble = 0;
-	toChar = helperfunc(str, toChar);
-	if (str.size() == 1 && !std::isdigit(str[0]))
-	{
-		if (!(std::isprint(str[0])))
-			std::cout << "char: : Non displayable" << std::endl;
-		else
-			std::cout << "char: " << str[0] << std::endl;
-		std::cout << "int: " << static_cast<int>(str[0]) << std::endl;
-		std::cout << "float: " << static_cast<float>(str[0]) << ".0f" << std::endl;
-		std::cout << "double: " << static_cast<double>(str[0]) << ".0" << std::endl;
-		return ;
-	}
-	checkint = std::stol(str);
-	if (checkint >= INT_MAX)
-	{
-		std::cout << "Number too big" << std::endl;
-		return ;
-	}
-	toInt = std::atoi(str.c_str());
-	if (str[str.size() - 1] == 'f')
-	{
-		toFloat = std::atof(str.c_str());
-		toDouble = static_cast<double>(toFloat);
-	}
-	else
-	{
-		toDouble = std::atof(str.c_str());
-		toFloat = static_cast<float>(toDouble);
-	}
-	if (toChar == "" && std::isprint(toInt))
-	{
-		toChar = "'";
-		toChar += static_cast<char>(toInt);
-		toChar += "'";
-	}
-	else if (toChar == "")
-	{
-		toChar = "Non displayable";
-	}
-	std::cout << "char: " << toChar << std::endl;
-	if (toChar == "imposible")
-	{
-		std::cout << "int: imposible" << std::endl;
-	}
-	else
-	{
-		std::cout << "int: " << toInt << std::endl;
-	}
+    if (isPseudoLiteral(literal))
+    {
+        std::cout << "char: impossible" << std::endl;
+        std::cout << "int: impossible" << std::endl;
+        if (literal == "nanf" || literal == "nan")
+        {
+            std::cout << "float: nanf" << std::endl;
+            std::cout << "double: nan" << std::endl;
+        }
+        else if (literal == "+inff" || literal == "+inf")
+        {
+            std::cout << "float: +inff" << std::endl;
+            std::cout << "double: +inf" << std::endl;
+        }
+        else
+        {
+            std::cout << "float: -inff" << std::endl;
+            std::cout << "double: -inf" << std::endl;
+        }
+        return;
+    }
 
-	if (toChar == "imposible" && toFloat == 0)
-	{
-		std::cout << "float: imposible" << std::endl;
-		std::cout << "double: imposible" << std::endl;
-	}
-	else
-	{
-		if (toChar != "imposible" && toFloat - static_cast<int>(toFloat) == 0)
-		{
-			std::cout << "float: " << toFloat << ".0f" << std::endl;
-			std::cout << "double: " << toDouble << ".0" << std::endl;
-		}
-		else
-		{
-			std::cout << "float: " << toFloat << "f" << std::endl;
-			std::cout << "double: " << toDouble << std::endl;
-		}
-	}
+    try
+    {
+        double d = std::atof(literal.c_str());
+        int i = static_cast<int>(d);
+        float f = static_cast<float>(d);
+
+        std::cout << "char: ";
+        if (i >= 32 && i <= 126)
+            std::cout << "'" << static_cast<char>(i) << "'" << std::endl;
+        else
+            std::cout << "Non displayable" << std::endl;
+
+        std::cout << "int: " << i << std::endl;
+
+        if (f - static_cast<int>(f) == 0)
+            std::cout << "float: " << f << ".0f" << std::endl;
+        else
+            std::cout << "float: " << f << "f" << std::endl;
+
+        if (d - static_cast<int>(d) == 0)
+            std::cout << "double: " << d << ".0" << std::endl;
+        else
+            std::cout << "double: " << d << std::endl;
+    }
+    catch (const std::exception& e)
+    {
+        std::cout << "Error: conversion failed" << std::endl;
+    }
 }

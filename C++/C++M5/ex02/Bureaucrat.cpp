@@ -1,41 +1,14 @@
 #include "Bureaucrat.hpp"
-#include "AForms.hpp"
 
-void	Bureaucrat::executeForm(AForms const &form)
+Bureaucrat::Bureaucrat(const std::string givenName, int i) : name(givenName)
 {
-	try
-	{
-		form.execute(*this);
+    if (i < 1)
+        throw GradeTooHighException();
+    if (i > 150)
+        throw GradeTooLowException();
 
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << this->name << " Could not sign the form because" << "Exception: " << e.what() << std::endl;
-	}
-}
-
-Bureaucrat::Bureaucrat( std::string givenName, int i) : name(givenName)
-{
-	try
-	{
-		if (i <= 150 && i > 0)
-		{
-			this->rank  = i;
-			std::cout << "A Bureaucrat is born & rank is successfully assigned" << std::endl;
-		}
-		else
-		{
-			if (i < 1)
-				throw std::runtime_error("GradeTooHighException");
-			if (i > 150)
-				throw std::runtime_error("GradeTooLowException");
-		}
-
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << "Exception: " << e.what() << std::endl;
-	}
+    rank = i;
+    std::cout << "A Bureaucrat is born & rank is successfully assigned" << std::endl;
 }
 
 Bureaucrat::~Bureaucrat()
@@ -43,36 +16,77 @@ Bureaucrat::~Bureaucrat()
 	std::cout << this->name << " Bureaucrat is terminated" << std::endl;
 }
 
-std::string	Bureaucrat::getName()
+Bureaucrat::Bureaucrat(const Bureaucrat& other) : name(other.name), rank(other.rank)
 {
-	return (this->name);
+    std::cout << "Bureaucrat copy constructor called" << std::endl;
 }
 
-int	Bureaucrat::getRank()
+Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other)
 {
-	return (this->rank);
+    if (this != &other)
+    {
+        this->rank = other.rank;
+        std::cout << "Bureaucrat copy assignment operator called" << std::endl;
+    }
+    return *this;
 }
 
-void	Bureaucrat::promoteBureaucrat(int i)
+std::string	Bureaucrat::getName() const
 {
-	try
-	{
-		if (i < 1)
-		{
-			throw std::runtime_error("invalid");
-		}
-		if (i > this->rank)
-		{
-			throw std::runtime_error("rank");
-		}
-		else
-		{
-			this->rank = i;
-			std::cout << "Promotion granted" << std::endl;
-		}
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << "Exception: " << e.what() << std::endl;
-	}
+	return name;
+}
+
+int	Bureaucrat::getRank() const
+{
+	return rank;
+}
+
+void Bureaucrat::promoteBureaucrat(int i)
+{
+    if (i < 1)
+        throw GradeTooHighException();
+    if (i >= rank)
+        throw std::runtime_error("Cannot promote to a lower grade");
+
+    rank = i;
+    std::cout << "Promotion granted" << std::endl;
+}
+
+void Bureaucrat::demoteBureaucrat(int i)
+{
+    if (i > 150)
+        throw GradeTooLowException();
+    if (i <= rank)
+        throw std::runtime_error("Cannot demote to a higher grade");
+
+    rank = i;
+    std::cout << "Demotion executed" << std::endl;
+}
+
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& b)
+{
+    os << b.getName() << ", bureaucrat grade " << b.getRank();
+    return os;
+}
+
+void Bureaucrat::signForm(AForm& form) {
+    try {
+        form.beSigned(*this);
+        std::cout << name << " signed " << form.getName() << std::endl;
+    }
+    catch (const std::exception& e) {
+        std::cout << name << " couldn't sign " << form.getName()
+                 << " because " << e.what() << std::endl;
+    }
+}
+
+void Bureaucrat::executeForm(AForm const & form) const {
+    try {
+        form.execute(*this);
+        std::cout << name << " executed " << form.getName() << std::endl;
+    }
+    catch (const std::exception& e) {
+        std::cout << name << " couldn't execute " << form.getName()
+                 << " because " << e.what() << std::endl;
+    }
 }

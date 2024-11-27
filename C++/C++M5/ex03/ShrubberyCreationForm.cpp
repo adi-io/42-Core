@@ -2,10 +2,32 @@
 #include "Bureaucrat.hpp"
 #include "AForms.hpp"
 
-ShrubberyCreationForm::ShrubberyCreationForm(const std::string gName) : AForms("ShrubberyCreationForm", 145, 137)
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string gName) : AForm("ShrubberyCreationForm", 145, 137)
 {
 	this->target = gName;
 	std::cout << "ShrubberyCreationForm constructer called" << std::endl;
+}
+
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other)
+    : AForm(other), target(other.target)
+{
+    std::cout << "ShrubberyCreationForm copy constructor called" << std::endl;
+}
+
+ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& other)
+{
+    if (this != &other)
+    {
+        AForm::operator=(other);
+        this->target = other.target;
+        std::cout << "ShrubberyCreationForm copy assignment operator called" << std::endl;
+    }
+    return *this;
+}
+
+ShrubberyCreationForm::~ShrubberyCreationForm()
+{
+    std::cout << "ShrubberyCreationForm destructor called" << std::endl;
 }
 
 void ShrubberyCreationForm::action() const
@@ -32,4 +54,9 @@ void ShrubberyCreationForm::action() const
     "                `}\n"
     "                 {"
     << std::endl;
+}
+
+void ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
+    AForm::execute(executor);
+    this->action();
 }

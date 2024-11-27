@@ -1,77 +1,76 @@
 #include "Bureaucrat.hpp"
 #include "AForms.hpp"
 
-void	AForms::execute(Bureaucrat const &executor) const
+AForm::AForm(const std::string gName, const int gGrade, const int gOGrade)
+    : name(gName), val(false), grade(gGrade), oGrade(gOGrade), signatory("")
 {
-	try
-	{
-		if (this->val == false)
-			throw std::runtime_error("Form not signed");
-		else if (executor.rank > this->oGrade)
-			throw std::runtime_error("GradeTooLowException");
-		this->action();
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << "Exception: " << e.what() << std::endl;
-	}
-
+    if (gGrade < 1 || gOGrade < 1)
+        throw GradeTooHighException();
+    if (gGrade > 150 || gOGrade > 150)
+        throw GradeTooLowException();
 }
 
-AForms::AForms(const std::string gName, const int gGrade, const int gOGrade) : name(gName), val(false), grade(gGrade), oGrade(gOGrade)
-{
-	try
-	{
-		if (gGrade < 0)
-			throw std::runtime_error("GradeTooHighException");
-		else if (gGrade > 150)
-			throw std::runtime_error("GradeTooHighException");
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << "Exception: " << e.what() << std::endl;
-	}
-
+AForm::~AForm() {
+    std::cout << "AForm destructor called" << std::endl;
 }
 
-void	AForms::beSigned(Bureaucrat &chap)
+AForm::AForm(const AForm& other)
+    : name(other.name), val(other.val), grade(other.grade), oGrade(other.oGrade), signatory(other.signatory)
 {
-	try
-	{
-		if (this->val == false && chap.rank > this->grade)
-		{
-			throw std::runtime_error("GradeTooLowToSignException");
-			return ;
-		}
-		if (this->val == false && chap.rank > this->oGrade)
-			throw std::runtime_error("GradeTooLowToAuthException");
-		else
-		{
-			this->signatory = chap.name;
-			this->val = true;
-			std::cout << "Form " << this->name << " has been signed by " << chap.name << std::endl;
-		}
-
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << "Exception: " << e.what() << std::endl;
-	}
+    std::cout << "AForm copy constructor called" << std::endl;
 }
 
-void	AForms::signForm(Bureaucrat &chap)
-{
-	try
-	{
-		if (this->val == false)
-			throw std::runtime_error("Form still unsigned");
-		if (this->oGrade >= chap.rank)
-			std::cout << "Form " << this->name << " has been signed by " << this->signatory << std::endl;
-		else
-			throw std::runtime_error("GradeTooLowToAuthException");
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << "Exception: " << e.what() << std::endl;
-	}
+AForm& AForm::operator=(const AForm& other) {
+    if (this != &other) {
+        val = other.val;
+        signatory = other.signatory;
+        std::cout << "AForm copy assignment operator called" << std::endl;
+    }
+    return *this;
+}
+
+std::string AForm::getName() const { return name; }
+bool AForm::getIsSigned() const { return val; }
+int AForm::getGradeToSign() const { return grade; }
+int AForm::getGradeToExecute() const { return oGrade; }
+std::string AForm::getSignatory() const { return signatory; }
+
+void AForm::beSigned(Bureaucrat& chap) {
+    if (chap.getRank() > this->grade) {
+        throw GradeTooLowException();
+    }
+    val = true;
+    signatory = chap.getName();
+}
+
+void AForm::signForm(Bureaucrat& chap) {
+    try {
+        beSigned(chap);
+        std::cout << chap.getName() << " signed " << this->name << std::endl;
+    }
+    catch (const std::exception& e) {
+        std::cout << chap.getName() << " couldn't sign " << this->name
+                 << " because " << e.what() << std::endl;
+    }
+}
+
+void AForm::execute(Bureaucrat const & executor) const {
+    if (!this->val) {
+        throw FormNotSignedException();
+    }
+    if (executor.getRank() > this->oGrade) {
+        throw GradeTooLowException();
+    }
+    this->action();
+}
+
+std::ostream& operator<<(std::ostream& os, const AForm& f) {
+    os << "Form: " << f.getName()
+       << "\nSigned: " << (f.getIsSigned() ? "Yes" : "No")
+       << "\nGrade required to sign: " << f.getGradeToSign()
+       << "\nGrade required to execute: " << f.getGradeToExecute();
+    if (f.getIsSigned()) {
+        os << "\nSigned by: " << f.getSignatory();
+    }
+    return os;
 }

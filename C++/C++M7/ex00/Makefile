@@ -1,7 +1,7 @@
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 NAME = output
-SRC = $(wildcard *.cpp)
+SRC = main.cpp
 OBJS = $(SRC:.cpp=.o)
 
 all: $(NAME)

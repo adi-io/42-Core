@@ -2,25 +2,25 @@
 
 Base::~Base() {};
 
-Base*	genrate()
+Base* generate(void)
 {
-	std::srand(time(NULL));
+    std::srand(time(NULL));
 
-	int n = rand() % 3;
-	switch (n)
-	{
-		case 0:
-			std::cout << "genrated on A class" << std::endl;
-			return (new A);
-		case 1:
-			std::cout << "genrated on A class" << std::endl;
-			return (new A);
-		case 2:
-			std::cout << "genrated on A class" << std::endl;
-			return (new A);
-	}
-	std::cout << "Unknown error occured" << std::endl;
-	return (NULL);
+    int n = rand() % 3;
+    switch (n)
+    {
+        case 0:
+            std::cout << "generated A class" << std::endl;
+            return (new A);
+        case 1:
+            std::cout << "generated B class" << std::endl;
+            return (new B);
+        case 2:
+            std::cout << "generated C class" << std::endl;
+            return (new C);
+    }
+    std::cout << "Unknown error occurred" << std::endl;
+    return (NULL);
 }
 
 void	identify(Base* p)
@@ -68,8 +68,9 @@ int	main(void)
 {
 	Base*	base;
 
-	base = genrate();
+	base = generate();
 	identify(base);
 	identify(*base);
+	delete base;
 	return (0);
 }

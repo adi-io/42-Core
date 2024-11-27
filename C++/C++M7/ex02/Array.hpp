@@ -20,5 +20,4 @@ private:
 
 #include "Array.tpp"
 
-#endif // ARRAY_HPP
-
+#endif

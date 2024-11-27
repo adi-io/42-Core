@@ -1,14 +1,21 @@
-#include "Bureaucrat.hpp"
-#include "AForms.hpp"
 #include "Intern.hpp"
+#include "Bureaucrat.hpp"
 
-int	main(void)
+int main()
 {
-	AForms* rrf;
-	Bureaucrat	obj("Adi", 10);
-	Intern	newa;
-	rrf = newa.makeForm("PresidentialPardonForm", "MOD");
-	rrf->action();
-	delete	rrf;
-	return (0);
+    Intern someRandomIntern;
+
+    AForm* rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+    if (rrf) {
+        Bureaucrat boss("Boss", 1);
+        boss.signForm(*rrf);
+        boss.executeForm(*rrf);
+        delete rrf;
+    }
+
+    AForm* invalidForm = someRandomIntern.makeForm("invalid form", "target");
+    if (invalidForm) {
+        delete invalidForm;
+    }
+    return 0;
 }

@@ -1,13 +1,18 @@
 #pragma once
-
 #include "AForms.hpp"
-#include "Bureaucrat.hpp"
 
-class AForms;
+class Intern {
+private:
+    struct FormType {
+        std::string name;
+        AForm* (*create)(const std::string&);
+    };
 
-class	Intern
-{
-	public:
-		Intern();
-		AForms*	makeForm(std::string name, std::string target);
+public:
+    Intern();
+    Intern(const Intern& other);
+    Intern& operator=(const Intern& other);
+    ~Intern();
+
+    AForm* makeForm(const std::string& formName, const std::string& target);
 };

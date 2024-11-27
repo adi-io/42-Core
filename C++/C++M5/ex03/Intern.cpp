@@ -1,30 +1,40 @@
+
 #include "Intern.hpp"
-#include <cstring>
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
 
-Intern::Intern()
-{
-	std::cout << "Intern has been created" << std::endl;
+Intern::Intern() {}
+Intern::Intern(const Intern& other) { (void)other; }
+Intern& Intern::operator=(const Intern& other) { (void)other; return *this; }
+Intern::~Intern() {}
+
+static AForm* createShrubbery(const std::string& target) {
+    return new ShrubberyCreationForm(target);
 }
 
-AForms*	Intern::makeForm(std::string name, std::string target)
-{
-	try
-	{
-		if (name == "ShrubberyCreationForm")
-			return (new ShrubberyCreationForm(target));
-		else if (name == "RobotomyRequestForm")
-			return (new RobotomyRequestForm(target));
-		else if (name == "PresidentialPardonForm")
-			return (new PresidentialPardonForm(target));
-		else
-			throw std::runtime_error("Please enter a valid form name");
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << "Exception: " << e.what() << std::endl;
-		return (nullptr);
-	}
+static AForm* createRobotomy(const std::string& target) {
+    return new RobotomyRequestForm(target);
+}
+
+static AForm* createPresidential(const std::string& target) {
+    return new PresidentialPardonForm(target);
+}
+
+AForm* Intern::makeForm(const std::string& formName, const std::string& target) {
+    static const FormType forms[] = {
+        {"shrubbery creation", &createShrubbery},
+        {"robotomy request", &createRobotomy},
+        {"presidential pardon", &createPresidential}
+    };
+
+    for (size_t i = 0; i < sizeof(forms) / sizeof(forms[0]); ++i) {
+        if (formName == forms[i].name) {
+            std::cout << "Intern creates " << formName << std::endl;
+            return forms[i].create(target);
+        }
+    }
+
+    std::cerr << "Error: form '" << formName << "' doesn't exist" << std::endl;
+    return nullptr;
 }

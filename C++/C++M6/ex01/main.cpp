@@ -4,7 +4,7 @@ int	main(void)
 {
 	Data	odata;
 
-	odata.n = 42;
+	odata.n = 42232323;
 	uintptr_t sdata = Serializer::serialize(&odata);
 	Data*	ddata = Serializer::deserialize(sdata);;
 	if (ddata == &odata)
@@ -17,4 +17,3 @@ int	main(void)
 	return (0);
 
 }
-

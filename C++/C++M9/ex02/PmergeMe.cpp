@@ -1,86 +1,138 @@
 #include "PmergeMe.hpp"
 
-template <typename T>
-void	PmergeMe::display(T& container)
-{
-	typename T::iterator it;
-	for (it = container.begin(); it != container.end(); it++)
-		std::cout << *it << " ";
-	std::cout << std::endl;
+PmergeMe::PmergeMe(int argc, char** argv) {
+    for (int i = 1; i < argc; ++i) {
+        if (!validateInput(argv[i])) {
+            throw std::invalid_argument("Invalid input: " + std::string(argv[i]));
+        }
+        int num = std::atoi(argv[i]);
+        vec.push_back(num);
+        deq.push_back(num);
+    }
 }
 
-void	PmergeMe::MergeSortDeque(std::deque<int> &arr)
-{
-	std::deque<int>::iterator it1, it2;
-	int	temp;
-
-	for (it1 = arr.begin() + 1; it1 != arr.end(); ++it1)
-	{
-		temp = *it1;
-		it2 = it1;
-		while (it2 != arr.begin() && *(std::prev(it2)) > temp)
-		{
-			*it2 = *(std::prev(it2));
-			std::advance(it2, -1);
-		}
-		*it2 = temp;
-	}
+bool PmergeMe::validateInput(const std::string& input) {
+    if (input.empty()) return false;
+    for (size_t i = 0; i < input.length(); ++i) {
+        if (!std::isdigit(input[i])) return false;
+    }
+    return true;
 }
 
-void	PmergeMe::MergeSortList(std::list<int> &arr)
-{
-	std::list<int>::iterator it1, it2;
-	int	temp;
+std::vector<size_t> PmergeMe::generateJacobsthalNumbers(size_t n) {
+    std::vector<size_t> jacobsthal;
+    if (n == 0) return jacobsthal;
 
-	for (it1 = ++arr.begin(); it1 != arr.end(); ++it1)
-	{
-		temp = *it1;
-		it2 = it1;
-		while (it2 != arr.begin() && *(std::prev(it2)) > temp)
-		{
-			*it2 = *(std::prev(it2));
-			std::advance(it2, -1);
-		}
-		*it2 = temp;
-	}
+    jacobsthal.push_back(0);
+    if (n == 1) return jacobsthal;
+
+    jacobsthal.push_back(1);
+    size_t i = 2;
+    while (jacobsthal.back() < n) {
+        size_t next = jacobsthal[i - 1] + 2 * jacobsthal[i - 2];
+        if (next > n) break;
+        jacobsthal.push_back(next);
+        ++i;
+    }
+    return jacobsthal;
 }
 
-PmergeMe::PmergeMe(int ac, char **av)
-{
-	std::deque<int>	inputDeque;
-	std::list<int>	inputList;
-	int	value;
+template<typename T>
+void PmergeMe::insertElement(T& container, size_t start, size_t end,
+                           typename T::value_type value) {
+    while (start < end) {
+        size_t mid = start + (end - start) / 2;
+        if (container[mid] > value)
+            end = mid;
+        else
+            start = mid + 1;
+    }
+    container.insert(container.begin() + start, value);
+}
 
-	srand(time(NULL));
-	for (int i = 1; i < ac; ++i)
-	{
-		value = atoi(av[i]);
-		if (value <= 0)
-		{
-			std::cout << "Only postive values accepted. " << value << std::endl;
-			exit (1);
-		}
-		inputDeque.push_back(value);
-		inputList.push_back(value);
-	}
-	std::cout << "Before ";
-	display(inputDeque);
+template<typename T>
+void PmergeMe::fordJohnsonSort(T& container) {
+    if (container.size() <= 1) return;
 
-	clock_t	start1 = clock();
-	MergeSortDeque(inputDeque);
-	clock_t	end1 = clock();
-	double time1 = static_cast<double>(end1 - start1) / CLOCKS_PER_SEC * 1000;
+    std::vector<std::pair<typename T::value_type, typename T::value_type>> pairs;
+    size_t unpaired = container.size() % 2;
+    typename T::value_type unpaired_element;
 
-	clock_t	start2 = clock();
-	MergeSortList(inputList);
-	clock_t	end2 = clock();
-	double time2 = static_cast<double>(end2 - start2) / CLOCKS_PER_SEC * 1000;
-	std::cout << "After ";
-	display(inputDeque);
-	std::cout << "Time to process a range of " << inputDeque.size() << " elements with std::deque container: " << time1 << " us" << std::endl;
-	std::cout << "Time to process a range of " << inputList.size() << " elements with std::list container: " << time2 << " us" << std::endl;
-	if (inputDeque == std::deque<int>(inputList.begin(), inputList.end()))
-		std::cout << "The sorted sequences are equal." << std::endl;
-	else
-		std::cout << "The sorted sequences are not equal." << std::endl;
+    for (size_t i = 0; i < container.size() - unpaired; i += 2) {
+        typename T::value_type a = container[i];
+        typename T::value_type b = container[i + 1];
+        if (a > b) std::swap(a, b);
+        pairs.push_back(std::make_pair(a, b));
+    }
+
+    if (unpaired) {
+        unpaired_element = container.back();
+    }
+
+    std::sort(pairs.begin(), pairs.end(),
+              [](const auto& a, const auto& b) { return a.second < b.second; });
+
+    container.clear();
+    for (const auto& pair : pairs) {
+        container.push_back(pair.second);
+    }
+
+    std::vector<typename T::value_type> pending;
+    for (const auto& pair : pairs) {
+        pending.push_back(pair.first);
+    }
+    if (unpaired) pending.push_back(unpaired_element);
+
+    std::vector<size_t> jacobsthal = generateJacobsthalNumbers(pending.size());
+
+    if (!pending.empty()) {
+        insertElement(container, 0, container.size(), pending[0]);
+    }
+
+    for (size_t i = 1; i < jacobsthal.size(); ++i) {
+        size_t start = jacobsthal[i - 1];
+        size_t end = jacobsthal[i];
+
+        for (size_t j = end; j > start; --j) {
+            if (j - 1 < pending.size()) {
+                insertElement(container, 0, container.size(), pending[j - 1]);
+            }
+        }
+    }
+
+    for (size_t i = jacobsthal.back() + 1; i <= pending.size(); ++i) {
+        insertElement(container, 0, container.size(), pending[i - 1]);
+    }
+}
+
+void PmergeMe::execute() {
+    std::cout << "Before: ";
+    for (const auto& num : vec) std::cout << num << " ";
+    std::cout << std::endl;
+
+    clock_t start = clock();
+    fordJohnsonSort(vec);
+    clock_t end = clock();
+    double vecTime = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000;
+
+    start = clock();
+    fordJohnsonSort(deq);
+    end = clock();
+    double deqTime = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000;
+
+    displayResults(vecTime, deqTime);
+}
+
+void PmergeMe::displayResults(double vecTime, double deqTime) {
+    std::cout << "After: ";
+    for (const auto& num : vec) std::cout << num << " ";
+    std::cout << std::endl;
+
+    std::cout << "Time to process a range of " << vec.size()
+              << " elements with std::vector : " << std::fixed
+              << std::setprecision(5) << vecTime << " ms" << std::endl;
+
+    std::cout << "Time to process a range of " << deq.size()
+              << " elements with std::deque : " << std::fixed
+              << std::setprecision(5) << deqTime << " ms" << std::endl;
 }

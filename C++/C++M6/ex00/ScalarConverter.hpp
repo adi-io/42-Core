@@ -3,9 +3,14 @@
 #include <cstdlib>
 #include <climits>
 
-class ScalarConverter
-{
-	public:
-		ScalarConverter();
-		void	Scalar(std::string str);
+class ScalarConverter {
+private:
+    ScalarConverter();
+    ~ScalarConverter();
+
+    ScalarConverter(const ScalarConverter&);
+    ScalarConverter& operator=(const ScalarConverter&);
+
+public:
+    static void convert(const std::string& literal);
 };
