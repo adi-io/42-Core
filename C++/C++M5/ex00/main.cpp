@@ -8,7 +8,7 @@ int main()
 
         // Test promotion (should throw exception)
         try {
-            b1.promoteBureaucrat(0);
+            b1.promoteBureaucrat();
         } catch (const std::exception& e) {
             std::cout << "Exception caught: " << e.what() << std::endl;
         }
@@ -18,16 +18,16 @@ int main()
 
         // Test demotion (should throw exception)
         try {
-            b2.demoteBureaucrat(151);
+            b2.demoteBureaucrat();
         } catch (const std::exception& e) {
             std::cout << "Exception caught: " << e.what() << std::endl;
         }
 
         Bureaucrat b3("Bob", 75);
         std::cout << b3 << std::endl;
-        b3.promoteBureaucrat(50);
+        b3.promoteBureaucrat();
         std::cout << b3 << std::endl;
-        b3.demoteBureaucrat(100);
+        b3.demoteBureaucrat();
         std::cout << b3 << std::endl;
 
     } catch (const std::exception& e) {

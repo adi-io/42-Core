@@ -13,9 +13,5 @@ int main()
         delete rrf;
     }
 
-    AForm* invalidForm = someRandomIntern.makeForm("invalid form", "target");
-    if (invalidForm) {
-        delete invalidForm;
-    }
     return 0;
 }

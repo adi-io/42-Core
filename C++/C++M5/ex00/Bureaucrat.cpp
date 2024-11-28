@@ -41,25 +41,25 @@ int	Bureaucrat::getRank() const
 	return rank;
 }
 
-void Bureaucrat::promoteBureaucrat(int i)
+void Bureaucrat::promoteBureaucrat()
 {
-    if (i < 1)
+    if (rank-1 < 1)
         throw GradeTooHighException();
-    if (i >= rank)
-        throw std::runtime_error("Cannot promote to a lower grade");
+    if (rank-1 > 150)
+        throw GradeTooLowException();
 
-    rank = i;
+    rank++;
     std::cout << "Promotion granted" << std::endl;
 }
 
-void Bureaucrat::demoteBureaucrat(int i)
+void Bureaucrat::demoteBureaucrat()
 {
-    if (i > 150)
+    if (rank+1 > 150)
         throw GradeTooLowException();
-    if (i <= rank)
-        throw std::runtime_error("Cannot demote to a higher grade");
+    if (rank+1 < 0)
+        throw GradeTooHighException();
 
-    rank = i;
+    rank--;
     std::cout << "Demotion executed" << std::endl;
 }
 

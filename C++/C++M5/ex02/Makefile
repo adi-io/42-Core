@@ -1,4 +1,4 @@
-CC = c++
+CXX = c++
 CFLAGS = -Wall -Wextra -Werror
 NAME = output
 SRC = AForms.cpp Bureaucrat.cpp  main.cpp  PresidentialPardonForm.cpp  RobotomyRequestForm.cpp  ShrubberyCreationForm.cpp
@@ -7,7 +7,7 @@ OBJS = $(SRC:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CXX) $(CFLAGS) $^ -o $@
 
 
 fclean: clean

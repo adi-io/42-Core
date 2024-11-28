@@ -32,6 +32,7 @@ RobotomyRequestForm::~RobotomyRequestForm()
 
 void	RobotomyRequestForm::action() const
 {
+    srand(time(NULL));
 	std::cout << "drrrrrrrrrrrrrrr" << std::endl;
 	try
 	{

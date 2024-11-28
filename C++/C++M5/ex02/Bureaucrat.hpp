@@ -7,9 +7,12 @@
 
 class	Bureaucrat
 {
+
+    private:
+        const std::string name;
+        int rank;
+
 	public:
-		const	std::string	name;
-		int	rank;
 
 		class GradeTooHighException : public std::exception {
             public:
@@ -30,8 +33,8 @@ class	Bureaucrat
 		Bureaucrat& operator=(const Bureaucrat& other);
 		std::string	getName() const;
 		int	getRank() const;
-		void	promoteBureaucrat(int i);
-		void	demoteBureaucrat(int i);
+		void	promoteBureaucrat();
+		void	demoteBureaucrat();
 		void signForm(AForm& form);
 		void executeForm(AForm const & form) const;
 

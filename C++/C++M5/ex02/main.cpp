@@ -12,7 +12,7 @@ int main()
         // Create bureaucrats with different grades
         Bureaucrat president("President", 1);
         Bureaucrat manager("Manager", 70);
-        Bureaucrat intern("Intern", 140);
+        Bureaucrat intern("Bucher", 2);
 
         // Test ShrubberyCreationForm
         std::cout << "\n=== Testing ShrubberyCreationForm ===" << std::endl;

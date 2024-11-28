@@ -49,7 +49,7 @@ void ShrubberyCreationForm::action() const
     "                \\ }{\n"
     "                }}{\n"
     "                }}{\n"
-    "        akarafi {{}\n"
+    "        agadkar {{}\n"
     "        , -=-~{ .-^- _\n"
     "                `}\n"
     "                 {"
