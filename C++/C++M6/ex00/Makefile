@@ -1,4 +1,4 @@
-CC = c++
+CXX = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 NAME = output
 SRC = ScalarConverter.cpp main.cpp
@@ -7,7 +7,7 @@ OBJS = $(SRC:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CXX) $(CFLAGS) $^ -o $@
 
 
 fclean: clean

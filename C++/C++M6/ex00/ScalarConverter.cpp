@@ -13,7 +13,7 @@ static bool isChar(const std::string& str)
 static bool isPseudoLiteral(const std::string& str)
 {
     return (str == "-inff" || str == "+inff" || str == "nanf" ||
-            str == "-inf" || str == "+inf" || str == "nan");
+            str == "inf" || str == "-inf" || str == "+inf" || str == "nan");
 }
 
 void ScalarConverter::convert(const std::string& literal)
